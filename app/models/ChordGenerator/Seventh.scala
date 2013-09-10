@@ -53,7 +53,7 @@ class SeventhGenerator(rootName:String, intervals: SeventhIntervals){
   }
   def drop3(inversion: Int) = {
     //Find closed inversion
-    //Drop second highest note
+    //Drop third highest note
     val closed = closedInversions(mod((inversion + 3),4))
     Array(closed(1) - 12, closed(0), closed(2), closed(3))
   }
