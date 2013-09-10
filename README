@@ -19,7 +19,7 @@ ChordTrane will autoformat it to:
   -"Cm7.2" will set Cm7 to the second beat of the measure
   
 Tranpose
--Tranpose to any key or create Roman Numeral chords
+-Transpose to any key or create Roman Numeral chords
 
 Export to MusicXML
 -MusicXML is a common data format used by most major notation softwares, including:
