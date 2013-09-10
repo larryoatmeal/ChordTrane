@@ -19,9 +19,9 @@ object Song{
 		false
 	)
 	
-	def printSong(song: Song) = {
-		val allLines = Parser.parse(song.rawMusic, song.timeSig)
 
+	def parseSong(song: Song) = {
+		val allLines = Parser.parse(song.rawMusic, song.timeSig)
 		//Helper for updating deeply nested chords
 		val linesModifyChords = (function: (Chord) => Chord) => allLines.copy(
 			lines = allLines.lines.map{ line => line match {
@@ -42,7 +42,6 @@ object Song{
 				}
 			}
 		)
-
 		//tranpose if necessary
 		val modifiedLines: AllLines = 
 		if (song.transpose){
@@ -56,9 +55,27 @@ object Song{
 		else{
 				allLines
 		}
-		Formatter.print(modifiedLines, song.timeSig)
+		modifiedLines
+	}
+
+	def printSong(song: Song) = {
+		val allLines = parseSong(song)
+		Formatter.print(allLines, song.timeSig)
+	}
+
+	def exportXML(song: Song) = {
+		val allLines = parseSong(song)
+		val measures = allLines.lines.collect{case m: MusicLine => m}.flatMap(_.measures)
+		val musicXML = MusicXMLGenerator.musicXML(measures, song.destinationKey, song.timeSig, "Title", "Composer")
+		
+		import scala.xml.dtd.{DocType, PublicID} 
+		val docType = new DocType("score-partwise", PublicID("-//Recordare//DTD MusicXML 3.0 Partwise//EN", "http://www.musicxml.org/dtds/partwise.dtd"), Nil)
+    val filename = "Title" + "_" + "Composer" + ".xml"
+    scala.xml.XML.save(s"MusicXML/$filename", musicXML, "UTF-8", true, docType)
 	}
 }
+
+
 
 case class Song(
 	rawMusic: String,
