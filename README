@@ -1,4 +1,35 @@
-This is your new Play 2.1 application
+ChordTrane
 =====================================
 
-This file will be packaged with your application, when using `play dist`.
+Type in chord charts as text
+
+Ex:
+| Cmaj7 Am7 | Dm7 G7 G7b9 |
+| Em7 A7.4 | Dm7 G7|
+
+ChordTrane will autoformat it to:
+
+|Cmaj7 /     Am7   /     |Dm7   /     G7    G7b9  |
+|Em7   /     /     A7    |Dm7   /     G7    /     |
+
+-Specify measures with beginning and ending "|" character
+-Separate chords in measures with spaces
+-Chords will be placed on default beats
+  -To override default, add ".beatNumber" to the end of the chord
+  -"Cm7.2" will set Cm7 to the second beat of the measure
+  
+Tranpose
+-Tranpose to any key or create Roman Numeral chords
+
+Export to MusicXML
+-MusicXML is a common data format used by most major notation software, including:
+  -Finale
+  -Sibelius
+  -Noteflight
+  -Musescore
+  -and many more...
+-With click of a button, ChordTrane will create a MusicXML from your chord text
+-Open up MusicXML in your notation software
+
+Playback (to be implemented)
+
