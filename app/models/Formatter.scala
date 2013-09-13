@@ -1,7 +1,7 @@
 package models
 
 object Formatter{
-
+	
 	def chordString(chord: Chord) = {
 		chord.root + chord.suffix + chord.bass.map("/" + _).getOrElse("")
 	}

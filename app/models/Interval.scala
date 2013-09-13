@@ -2,7 +2,7 @@
 package models
 
 object Interval{
-
+ 
   //For convenience so no need to count semitones
   val P1 = 0
   val m2 = 1

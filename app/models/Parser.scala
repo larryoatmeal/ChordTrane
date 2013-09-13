@@ -1,7 +1,6 @@
 package models
 
 import scala.util.matching.Regex
-import play.api.Logger
 
 case class Chord(root: String, suffix: String, bass: Option[String], beat: Int)
 //case class MeasureString(measureString: String)

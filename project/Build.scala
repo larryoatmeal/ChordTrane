@@ -3,7 +3,6 @@ import Keys._
 import play.Project._
 
 object ApplicationBuild extends Build {
-
   val appName         = "ChordTrane"
   val appVersion      = "1.0-SNAPSHOT"
 
@@ -23,8 +22,8 @@ object ApplicationBuild extends Build {
       |Thread.currentThread.setContextClassLoader(getClass.getClassLoader)
       |new play.core.StaticApplication(new java.io.File("."))
       |import models._
+      |import models.ChordGenerator._
       |import scala.collection.JavaConversions._ 
       """.stripMargin    
   )
-
 }

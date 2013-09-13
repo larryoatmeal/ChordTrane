@@ -2,8 +2,10 @@ package models.ChordGenerator
 
 case class SeventhIntervals(third: Int, fifth: Int, seventh: Int)
 
+class ChordGenerator
 
-object SeventhGenerator{
+
+object SeventhGenerator{//4 notes. Doesn't have to be an actual seventh
 
   //These are intervals
   import models.Interval._
@@ -13,6 +15,9 @@ object SeventhGenerator{
   val Dom7 = SeventhIntervals(M3, P5, m7)
   val Dim7 = SeventhIntervals(m3, d5, d7)
   val Hdim7 = SeventhIntervals(m3, d5, m7)
+  val Maj6 = SeventhIntervals(m3, P5, M6)
+  val Min6 = SeventhIntervals(m3, P5, m6)
+  
 
   //Inversions
   val Root = 0
@@ -24,8 +29,7 @@ object SeventhGenerator{
  
 }
 
-class SeventhGenerator(rootName:String, intervals: SeventhIntervals){
-
+class SeventhGenerator(rootName:String, intervals: SeventhIntervals) extends ChordGenerator{
   import SeventhGenerator._
   import models.Helper._
 
