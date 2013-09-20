@@ -64,4 +64,11 @@ class SeventhGenerator(rootName:String, intervals: SeventhIntervals) extends Cho
 
   lazy val drop3s = Inversions.map(inversion => drop3(inversion))
   lazy val drop2s = Inversions.map(inversion => drop2(inversion))
+
+  def printAll = {
+    closedInversions.map(models.Note.printNotes(_)).mkString("Closed: \n", "\n", "\n") +
+    drop2s.map(models.Note.printNotes(_)).mkString("Drop 2: \n", "\n", "\n") + 
+    drop3s.map(models.Note.printNotes(_)).mkString("Drop 3: \n", "\n", "\n")
+  }
+
 }
