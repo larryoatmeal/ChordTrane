@@ -65,7 +65,7 @@ object Song{
 
 	def exportXML(song: Song) = {
 		val allLines = parseSong(song)
-		val measures = allLines.lines.collect{case m: MusicLine => m}.flatMap(_.measures)
+		val measures = measuresOnly(allLines)
 		val musicXML = MusicXMLGenerator.musicXML(measures, song.destinationKey, song.timeSig, "Title", "Composer")
 		
 		import scala.xml.dtd.{DocType, PublicID} 
@@ -73,6 +73,9 @@ object Song{
     val filename = "Title" + "_" + "Composer" + ".xml"
     scala.xml.XML.save(s"MusicXML/$filename", musicXML, "UTF-8", true, docType)
 	}
+
+	def measuresOnly(allLines: AllLines) = allLines.lines.collect{case m: MusicLine => m}.flatMap(_.measures)
+
 }
 
 

@@ -4,9 +4,6 @@ import models.ChordGenerator._
 
 
 
-
-
-
 object ChordLogic{
 
 	//kind ids
@@ -96,7 +93,10 @@ object ChordLogic{
 
 
 
-	def getChordGenerator(root: String, suffix: String) = {
+	def getChordGenerator(chord: Chord) = {
+		val root = chord.root
+		val suffix = chord.suffix
+
 		val (kindString, kindId) = suffix match {
 			case "" => ("", Maj) //for major chords
 			case s => {
@@ -149,14 +149,7 @@ object ChordLogic{
 			case Min6 => new SeventhGenerator(root, SeventhGenerator.Min6)
 			case _ => new SeventhGenerator(root, SeventhGenerator.Maj7)
 		}
-
-		
-
 	}
-	
-
-
-
 }
 
 
