@@ -16,6 +16,7 @@ case class EmptyLine() extends Line
 
 case class AllLines(lines: List[Line])
 
+//Convert music bar into MusicLine
 object MusicMatch{
 	def apply(measureStrings: List[String]) = measureStrings.mkString("|","|","|") 
 
@@ -30,6 +31,7 @@ object MusicMatch{
 	}
 }
 
+//Converts a text segment into a TextLine
 object TextMatch{
 	def apply(text: String) = s"($text)"
 	def unapply(input: String) = {
@@ -38,6 +40,7 @@ object TextMatch{
 	}
 }
 
+//Converts a ChordString into a Chord
 class ChordMatch(timeSig: Int){//Behaviour differs based on time signature
   def apply(chords: List[Chord]) = {
     def chordToString(chord: Chord) = {
@@ -169,11 +172,10 @@ object Parser{
     }
 
 		val lines = splitIntoLines(raw) //split into lines of text
-    println("LINES" + lines.toString)
+    //println("LINES" + lines.toString)
 
     AllLines(lines.map(parseLine(_)))
 
-    
   }
 }
 

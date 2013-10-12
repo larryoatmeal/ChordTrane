@@ -1,8 +1,14 @@
 package models.ChordGenerator
 
+import models.Note
+
 case class SeventhIntervals(third: Int, fifth: Int, seventh: Int)
 
-class ChordGenerator
+class ChordGenerator(rootName: String){
+  override def toString = rootName
+  val rootMidi = Note.midify(rootName)
+
+}
 
 
 object SeventhGenerator{//4 notes. Doesn't have to be an actual seventh
@@ -29,7 +35,7 @@ object SeventhGenerator{//4 notes. Doesn't have to be an actual seventh
  
 }
 
-class SeventhGenerator(rootName:String, intervals: SeventhIntervals) extends ChordGenerator{
+class SeventhGenerator(rootName:String, intervals: SeventhIntervals) extends ChordGenerator(rootName){
   import SeventhGenerator._
   import models.Helper._
 
@@ -64,6 +70,8 @@ class SeventhGenerator(rootName:String, intervals: SeventhIntervals) extends Cho
 
   lazy val drop3s = Inversions.map(inversion => drop3(inversion))
   lazy val drop2s = Inversions.map(inversion => drop2(inversion))
+
+  lazy val all = closedInversions ++ drop2s ++ drop3s
 
   def printAll = {
     closedInversions.map(models.Note.printNotes(_)).mkString("Closed: \n", "\n", "\n") +

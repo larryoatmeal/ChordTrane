@@ -40,6 +40,7 @@ object Note{
       case "A" | "Bbb" | "G##" => 9
       case "A#"| "Bb"  | "Cbb" => 10
       case "B" | "Cb"  | "A##" => 11
+      case _ => println("Notematch error: " + notename); 0
     }
   }
   //Major scale contains one of each note. Must be able to use % 
@@ -91,7 +92,14 @@ object Note{
     pitch + octave
   }
 
-  def closestPitch(have: Int, want: Int) = {
+  def getMidiNote(root: String, octave: Int) = {
+    val rootMidi = Note.midify(root)
+    rootMidi + ( octave + 1) * 12 
+  }
+
+  
+  
+  def closestPitch(have: Int, want: Int) = {//D0, B7 => D8
     val delta = mod12(want) - mod12(have)
 
     val idealDelta = delta match {//Find smallest delta. For example -11 should be translated to +1
@@ -102,8 +110,21 @@ object Note{
     have + idealDelta
   }
 
+  def octaveAdjust(have: Int, want: Int) = {//how many octaves to shift have to get closest have to in semitones
+    (want - closestPitch(have, want))
+  }
+
   def printNotes(notes: Array[Int]) = {
     notes.map(noteName(_)).mkString(" ")
   }
+
+  def closestInterval(startingNote: Int, endingNote: Int) = {
+    val interval = Helper.mod12(endingNote) - Helper.mod12(startingNote)
+    val alternateInterval = if(interval > 0){interval - 12}else{interval + 12}//+M3 becomes -m6
+
+    if(Math.abs(interval) < Math.abs(alternateInterval)){interval}else{alternateInterval}
+  }
+
+
 }
 

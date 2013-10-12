@@ -1,21 +1,16 @@
 package models
 
 
-object Song{
+object Master{
 	val DummySong = Song(
 		"""(Misty)
-		|Ebmaj7 | Bbm7 Eb7 | Abmaj7 | Abmin7 Db7|
-		|Ebmaj7 Cm7 | Fm7 Bb7 | Gm7 C7 | Fm7 Bb7|
-		(Hello)
-		|Ebmaj7 Cm7 | Fm7 Bb7 | Gm7 C7 | Fm7 Bb7|
-		|Ebmaj7 Cm7 | Fm7 Bb7 | Gm7 C7 | Fm7 Bb7|
-		|Ebmaj7.2 Cm7.5 | Fm7/Db Bb7 | Gm7 C7 | Fm7 Bb7|
-		|Ebmaj7 Cm7 | Fm7 Bb7 | Gm7 C7 | Fm7 Bb7|
+		| Ebmaj7 Cm7 | Fm7 Bb7 | Ebmaj7 Cm7 | Fm7 Dhdim7 G7b9 |
+		| Cm7 Abm7 | Ebmaj7 Eb7 Gm7 Gbm7 |Fm7 Bb7 | Gm7 C7b9 Fm7 Bb7b9|
 		""",
 		"Eb",
-		"B",
+		"Eb",
 		4,
-		true,
+		false,
 		false
 	)
 	
@@ -65,7 +60,7 @@ object Song{
 
 	def exportXML(song: Song) = {
 		val allLines = parseSong(song)
-		val measures = measuresOnly(allLines)
+		val measures = Helper.measuresOnly(allLines)
 		val musicXML = MusicXMLGenerator.musicXML(measures, song.destinationKey, song.timeSig, "Title", "Composer")
 		
 		import scala.xml.dtd.{DocType, PublicID} 
@@ -74,7 +69,7 @@ object Song{
     scala.xml.XML.save(s"MusicXML/$filename", musicXML, "UTF-8", true, docType)
 	}
 
-	def measuresOnly(allLines: AllLines) = allLines.lines.collect{case m: MusicLine => m}.flatMap(_.measures)
+	
 
 }
 
