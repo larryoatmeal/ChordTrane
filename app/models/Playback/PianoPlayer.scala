@@ -3,7 +3,7 @@ package models
 import models.ChordGenerator._
 
 case class MidiChord(chord: Array[Int], tick: Int)
-case class CompingOptions(minRange: Int, maxRange: Int, closedness: Double, rangeCurvePower: Double)
+case class PianoSettings(lower: Int, upper: Int, stayInTessitura: Double, connectivity: Double)
 
 
 
@@ -15,9 +15,9 @@ object PianoPlayer{
 	val JAZZ_BALLAD4 = 1
 
 	
-	val DefaultCompingOptions = CompingOptions(Note.getMidiNote("C", 2), Note.getMidiNote("C", 5), 5.0, 5.0)
+	val DefaultPianoSettings = PianoSettings(Note.getMidiNote("G", 2), Note.getMidiNote("C", 5), 1.0, 5.0)
 
-	def getCompingMidi(chordTemplate: Array[ComperTemplate], style: Int, numberOfMeasures: Int, compingOptions: CompingOptions = DefaultCompingOptions) = {
+	def getCompingMidi(chordTemplate: Array[ComperTemplate], style: Int, numberOfMeasures: Int, PianoSettings: PianoSettings = DefaultPianoSettings) = {
 
 		val compingPattern = style match {
 			case JAZZ_SWING4 => JazzSwing.generateRhythmTrack(numberOfMeasures)
@@ -32,20 +32,43 @@ object PianoPlayer{
 				out
 			}
 			else{
-				val nextChord = getNextChord(out.head.chord, remaining.head.chordGenerator, compingOptions)
+				val nextChord = getNextChord(out.head.chord, remaining.head.chordGenerator, PianoSettings)
 				val newChord = MidiChord(nextChord, remaining.head.tick)
 				loop(remaining.tail, newChord +: out)
 			}
 		}
 
 		val startingChord = MidiChord(firstChord(filledInChordTemplate.head.chordGenerator), filledInChordTemplate.head.tick)
-		loop(filledInChordTemplate.tail, Array(startingChord)).reverse
+		val chordArray = loop(filledInChordTemplate.tail, Array(startingChord)).reverse
+
+		if(style == JAZZ_SWING4){
+			swing(chordArray)
+		}else{
+			chordArray
+		}
 
 	}
 	
 
+	def swing(midiChords: Array[MidiChord]) = {
+		midiChords.map{
+			midiChord => {
+				val swungTick = midiChord.tick match {
+					case t if t % 2 == 0 => {//on beats
+						t * 3 /2
+					}
+					case t => {//off beats
+						(t - 1) * 3/2 + 2
+					}
+				}
+				MidiChord(midiChord.chord, swungTick)
+			}
+		}
+	}
+
+
 	
-	def getNextChord(prevChord: Array[Int], wantedChordType: ChordGenerator, compingOptions: CompingOptions) = {
+	def getNextChord(prevChord: Array[Int], wantedChordType: ChordGenerator, PianoSettings: PianoSettings) = {
 		wantedChordType match {
 			case s: SeventhGenerator => {
 				val chords = s.all
@@ -53,14 +76,15 @@ object PianoPlayer{
 				val chordOptions = ChordMatcher.chordOptions(prevChord, chords)
 
 				//Analyze position of preceding chord. Determine what to do
-				val min = compingOptions.minRange
-				val max = compingOptions.maxRange
+				val min = PianoSettings.lower
+				val max = PianoSettings.upper
 				val center = (min + max) / 2
 				val deviation = max - center
 
 				//get Chord from list of chords with certain variance determined by probaility
+				//Don't always want closest chord
 				def randomizedVarianceChord(chords: Array[ChordOption]) = {
-					def f = Helper.randomInRange(0, chords.length, compingOptions.closedness)
+					def f = Helper.randomInRange(0, chords.length, PianoSettings.connectivity)
 					val index = f(Helper.randomOneToZero)
 					val sortedByVariance = chords.sortWith(_.variance < _.variance)
 					sortedByVariance(index).chord
@@ -68,21 +92,21 @@ object PianoPlayer{
 
 				//probability you need to shift chord to keep in comfortable range
 				def shiftNecessary(chord: Array[Int]) = {
-					def shiftRangeProbability = Helper.powerProbabilityCurve(center, deviation, compingOptions.rangeCurvePower)
+					def shiftRangeProbability = Helper.powerProbabilityCurve(center, deviation, PianoSettings.stayInTessitura)
 					val lowestNoteOfChord = chord.head
 					val shiftProbability = shiftRangeProbability(lowestNoteOfChord)
 					Helper.rollDice(shiftProbability)
 				}
 
-				//Mean of previous chord
-				val meanPrevChord = ChordMatcher.chordMean(prevChord)
+				//Lowest note of previous chord
+				val lowestPrevChord = prevChord.head
 
 				if(shiftNecessary(prevChord)){//If in uncomfortable range
 					if(prevChord.head > center){//If lowest not of chord is greater above center
 						//Either choose a higher chord, or jump an octave
 						//Choose only chord options that are higher than previous
 						if(Helper.rollDice(0.5)){
-							val higherChords = chordOptions.filter(_.mean > meanPrevChord)
+							val higherChords = chordOptions.filter(_.chord.head < lowestPrevChord)
 							randomizedVarianceChord(higherChords)
 						}
 						//Find closest chord then jump an octave
@@ -92,7 +116,7 @@ object PianoPlayer{
 					}
 					else{//Too low
 						if(Helper.rollDice(0.5)){
-							val lowerChords = chordOptions.filter(_.mean < meanPrevChord)
+							val lowerChords = chordOptions.filter(_.chord.head > lowestPrevChord)
 							randomizedVarianceChord(lowerChords)
 						}
 						else{
@@ -107,11 +131,11 @@ object PianoPlayer{
 	}
 
 
-	def firstChord(chordType: ChordGenerator, compingOptions: CompingOptions = DefaultCompingOptions) = {
+	def firstChord(chordType: ChordGenerator, PianoSettings: PianoSettings = DefaultPianoSettings) = {
 		chordType match {
 			case s: SeventhGenerator => {
 				val chord = Helper.getRandomFromArray[Array[Int]](s.drop2s)
-				val desiredHeight = Helper.getRandomWithinRange(compingOptions.minRange, compingOptions.maxRange)
+				val desiredHeight = Helper.getRandomWithinRange(PianoSettings.lower, PianoSettings.upper)
 				val octaveAdjust = Note.octaveAdjust(chord.head, desiredHeight)//compare to lowest note
 				chord.map(_ + octaveAdjust)
 			}

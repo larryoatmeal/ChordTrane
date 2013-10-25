@@ -1,0 +1,10 @@
+@(title: String, user: website.User)
+
+
+
+@homeTemplate(title){
+  <p class="navbar-text pull-right">
+    <span class="label label-primary">@user.firstName @user.lastName</span> 
+    <a class="navbar-link" href = "#"><span class="glyphicon glyphicon-log-out"></span> Log out</a>
+  </p>
+}

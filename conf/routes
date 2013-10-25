@@ -3,7 +3,25 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index
+GET     /                           controllers.Application.home
+GET     /guest                      controllers.Application.homeGuest
+
+
+#Javascript routing
+
+GET		/js/getSong					controllers.JSONmaster.getSong(id: Int)
+GET		/js/getSongs				controllers.JSONmaster.getSongs(userId: Int)
+PUT 	/js/saveSong 				controllers.JSONmaster.saveSong
+
+GET		/js/getPlaybackSettings		controllers.JSONmaster.getPlaybackSettings(songId: Int)
+PUT		/js/savePlaybackSettings	controllers.JSONmaster.savePlaybackSettings
+
+PUT 	/js/formatText				controllers.JSONmaster.formatText
+
+PUT 	/js/exportMusicXML			controllers.JSONmaster.exportMusicXML
+PUT 	/js/playback				controllers.JSONmaster.playback
+GET 	/js/download				controllers.JSONmaster.download(path: String)
 
 # Map static resources from the /public folder to the /assets URL path
+GET     /assets/javascripts/routes  controllers.Application.javascriptRoutes
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

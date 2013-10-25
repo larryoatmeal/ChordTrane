@@ -4,6 +4,11 @@ package models
 case class WeightedEntry(rhythm: Int, count: Int)
 case class RouletteEntry(rhythm: Int, roulette: Int)
 
+object RhythmStyleDatabase{
+
+}
+
+
 trait RhythmStyle{
 	import scala.io.Source
 	import scala.annotation.tailrec
@@ -143,7 +148,7 @@ trait RhythmStyle{
 }
 
 object JazzSwing extends RhythmStyle{
-	def filePath = "RhythmStyles/JazzSwing.txt"
+	def filePath = "public/RhythmStyles/JazzSwing.txt"
 	def subdivisions = 2
 	def timeSig = 4
 }

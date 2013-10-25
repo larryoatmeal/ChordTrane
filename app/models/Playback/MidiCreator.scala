@@ -30,27 +30,39 @@ object MidiCreator{
 	val Velocity = 60
 
 
+	val PianoChannel = 0
+	val BassChannel = 1
+
+
+
 	def noteEvent(command: Int, channel: Int, key: Int, velocity: Int, tick: Long) = {
 		val message = new ShortMessage()
 		message.setMessage(command, channel, key, velocity)
 		new MidiEvent(message, tick)
 	}
 
-	def noteOn(key: Int, tick: Int) = {
-		noteEvent(ShortMessage.NOTE_ON, 0, key, Velocity, tick)
+	// //no channel
+	// def noteEvent(command: Int, key: Int, velocity: Int, tick: Long) = {
+	// 	val message = new ShortMessage()
+	// 	message.setMessage(command, key, velocity)
+	// 	new MidiEvent(message, tick)
+	// }
+
+	def noteOn(key: Int, tick: Int, channel: Int) = {
+		noteEvent(ShortMessage.NOTE_ON, channel, key, Velocity, tick)
 	}
 
-	def noteOff(key: Int, tick: Int) = {
-		noteEvent(ShortMessage.NOTE_OFF, 0, key, Velocity, tick)
+	def noteOff(key: Int, tick: Int, channel: Int) = {
+		noteEvent(ShortMessage.NOTE_OFF, channel, key, Velocity, tick)
 	}
 
-	def noteOnOff(key: Int, startingTick: Int, duration: Int) = {
-		Array(noteOn(key, startingTick), noteOff(key, startingTick + duration))
+	def noteOnOff(key: Int, startingTick: Int, duration: Int, channel: Int) = {
+		Array(noteOn(key, startingTick, channel), noteOff(key, startingTick + duration, channel))
 	}
 
 	def programChange(patch: Int, channel: Int, tick: Int) = {
 		val message = new ShortMessage()
-		message.setMessage(ShortMessage.PROGRAM_CHANGE, channel, patch, -1)//2nd byte ignored
+		message.setMessage(ShortMessage.PROGRAM_CHANGE, channel, patch, 0)//2nd byte ignored
 		new MidiEvent(message, tick)
 	}
 
@@ -58,33 +70,35 @@ object MidiCreator{
 	def PianoProgram(channel: Int) = programChange(0, channel, 0)
 
 
-	val sampleSequence = Array(
-		Array(programChange(12, 0, 0)),
-		noteOnOff(Note.getMidiNote("C", 6), 0, QUARTER),
-		noteOnOff(Note.getMidiNote("D", 6), 24, QUARTER),
-		noteOnOff(Note.getMidiNote("E", 6), 48, QUARTER),
-		noteOnOff(Note.getMidiNote("F", 6), 72, QUARTER)
-	).flatten
+	// val sampleSequence = Array(
+	// 	Array(programChange(12, 0, 0)),
+	// 	noteOnOff(Note.getMidiNote("C", 6), 0, QUARTER),
+	// 	noteOnOff(Note.getMidiNote("D", 6), 24, QUARTER),
+	// 	noteOnOff(Note.getMidiNote("E", 6), 48, QUARTER),
+	// 	noteOnOff(Note.getMidiNote("F", 6), 72, QUARTER)
+	// ).flatten
 
+	
 
-
-
-	def midiChordsToMidiEvent(midiChords: Array[MidiChord], subdivions: Int) = {
+	def midiChordsToMidiEvent(midiChords: Array[MidiChord], subdivisions: Int, channel: Int) = {
 		midiChords.map{
 			midiChord => {
-				val midiTick = midiChord.tick * Resolution / subdivions
-				midiChord.chord.map(noteOnOff(_, midiTick, EIGHTH)).flatten
+				val midiTick = midiChord.tick * Resolution / subdivisions
+				midiChord.chord.map(noteOnOff(_, midiTick, EIGHTH, channel)).flatten
 			}
 		}.flatten
 	}
-	def singleNotesToMidiEvent(notes: Array[SingleNote], subdivions: Int) = {
+	def singleNotesToMidiEvent(notes: Array[SingleNote], subdivisions: Int, channel: Int) = {
 		notes.map{
 			snote => {
-				val midiTick = snote.tick * Resolution / subdivions
-				noteOnOff(snote.note, midiTick, QUARTER)
+				val midiTick = snote.tick * Resolution / subdivisions
+				noteOnOff(snote.note, midiTick, QUARTER, channel)
 			}
 		}.flatten
 	}
+
+
+
 
 	// def test = {
 	// 	val midiEvents = midiChordsToMidiEvent(PianoComper.testChords, 2)
@@ -106,6 +120,7 @@ class MidiCreator{
 	}
 
 	def createMidi(filePath: String){
+		println(sequence.getPatchList())
 		val outputFile = new File(filePath)
 		MidiSystem.write(sequence, 1, outputFile)
 	}

@@ -58,18 +58,26 @@ object Master{
 		Formatter.print(allLines, song.timeSig)
 	}
 
-	def exportXML(song: Song) = {
+	def exportXML(song: Song, path: String, title:String, composer: String) = {
 		val allLines = parseSong(song)
 		val measures = Helper.measuresOnly(allLines)
-		val musicXML = MusicXMLGenerator.musicXML(measures, song.destinationKey, song.timeSig, "Title", "Composer")
+		val musicXML = MusicXMLGenerator.musicXML(measures, song.destinationKey, song.timeSig, title, composer)
 		
 		import scala.xml.dtd.{DocType, PublicID} 
 		val docType = new DocType("score-partwise", PublicID("-//Recordare//DTD MusicXML 3.0 Partwise//EN", "http://www.musicxml.org/dtds/partwise.dtd"), Nil)
-    val filename = "Title" + "_" + "Composer" + ".xml"
-    scala.xml.XML.save(s"MusicXML/$filename", musicXML, "UTF-8", true, docType)
+    scala.xml.XML.save(s"$path", musicXML, "UTF-8", true, docType)
 	}
 
 	
+
+	def playback(song: Song, path: String) = {
+		val allLines = parseSong(song)
+		val measures = Helper.measuresOnly(allLines)
+
+		val rhythmSection = new RhythmSectionCoordinator(measures, song.timeSig, 2, PianoPlayer.JAZZ_SWING4)
+		rhythmSection.midi(path)
+	}
+
 
 }
 

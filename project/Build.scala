@@ -10,7 +10,8 @@ object ApplicationBuild extends Build {
     // Add your project dependencies here,
     jdbc,
     anorm,
-    "org.scalaz" % "scalaz-core_2.10" % "7.0.3"
+    "org.scalaz" % "scalaz-core_2.10" % "7.0.3",
+    "mysql" % "mysql-connector-java" % "5.1.18"
     )
 
 

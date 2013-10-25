@@ -26,6 +26,8 @@ object RhythmSectionCoordinator{
 
 	val dummyRhythmSection = new RhythmSectionCoordinator(dummyMeasures, 4, 2, PianoPlayer.JAZZ_SWING4)
 
+	
+
 
 }
 
@@ -38,21 +40,20 @@ class RhythmSectionCoordinator(measures: List[Measure], timeSig: Int, subdivisio
 	def bass = BassPlayer.bassSkeleton(chordTemplate)
 
 
-	def midi{
+	def midi(path: String){
 		val master = new MidiCreator
 		
 
 
 		//Piano
-		val pianoMidiData = MidiCreator.PianoProgram(0) +: MidiCreator.midiChordsToMidiEvent(piano, subdivisions) 
+		val pianoMidiData = MidiCreator.PianoProgram(MidiCreator.PianoChannel) +: MidiCreator.midiChordsToMidiEvent(piano, 3, MidiCreator.PianoChannel) //piano triplet feel. Resolve later
 		master.createTrack(pianoMidiData)
 
 		//Bass 
-		val bassMidiData = MidiCreator.BassProgram(1) +: MidiCreator.singleNotesToMidiEvent(bass, subdivisions) 
+		val bassMidiData = MidiCreator.BassProgram(MidiCreator.BassChannel) +: MidiCreator.singleNotesToMidiEvent(bass, subdivisions, MidiCreator.BassChannel) 
 		master.createTrack(bassMidiData)
 
-		master.createMidi("C:/misty.midi")
-
+		master.createMidi(path)
 	}
 
 

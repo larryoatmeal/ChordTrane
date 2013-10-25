@@ -56,8 +56,21 @@ object Helper{
 		//Higher power, less steep curve
 
 		//y = 1/deviation^power * (x-center)^power
+		//if 
 
-		(note: Int) => 1.0/ Math.pow(deviation, power) * Math.pow(note - center, power)
+		(note: Int) => {
+			note match {
+				//if out of range, necessarily 1 probability
+				case n if n < center - deviation => 1
+				case n if n > center + deviation => 1
+				
+				case n => Math.abs(1.0/ Math.pow(deviation, power) * Math.pow(note - center, power))
+
+
+			}
+
+			
+		}
 	}
 
 	//Ex:

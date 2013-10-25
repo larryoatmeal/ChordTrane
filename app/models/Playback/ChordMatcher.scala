@@ -7,8 +7,7 @@ object ChordMatcher{
 
 	//Find closest chord of alternatives
 	
-
-
+	
 	def closestChord(precedingChord: Array[Int], potentialDestinationChords: Array[Array[Int]]) = {
 		val potentialDestinationChordsWithVariance = potentialDestinationChords.map{
 			potentialChord => 
