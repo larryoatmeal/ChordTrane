@@ -27,7 +27,7 @@ object ChordLogic{
 	val Dom13 = 18
 	val Maj6 = 19
 	val Maj69 = 20
-  val Min6 = 21
+  	val Min6 = 21
 	val Sus2 = 22
 	val Sus4 = 23
 	val Sus7 = 24

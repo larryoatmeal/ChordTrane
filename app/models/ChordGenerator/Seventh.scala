@@ -4,11 +4,11 @@ import models.Note
 
 case class SeventhIntervals(third: Int, fifth: Int, seventh: Int)
 
-class ChordGenerator(rootName: String){
+abstract class ChordGenerator(rootName: String){
   override def toString = rootName
   val rootMidi = Note.midify(rootName)
-
-}
+  def chordTones: Array[Int]
+} 
 
 
 object SeventhGenerator{//4 notes. Doesn't have to be an actual seventh
@@ -41,10 +41,13 @@ class SeventhGenerator(rootName:String, intervals: SeventhIntervals) extends Cho
 
   val root = models.Note.midify(rootName)
 
+
   val closedRoot = Array(root, 
     root+intervals.third,
     root+intervals.fifth,
     root+intervals.seventh)
+
+  def chordTones = closedRoot
 
   val closedInversions = Inversions.map(inversion => closedInversion(inversion))
 

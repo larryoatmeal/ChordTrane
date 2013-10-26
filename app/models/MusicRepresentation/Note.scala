@@ -125,6 +125,14 @@ object Note{
     if(Math.abs(interval) < Math.abs(alternateInterval)){interval}else{alternateInterval}
   }
 
+  def chordTonesInBetweenInclusive(start: Int, end: Int, chordTones: Array[Int]) = {
+    val potentialNotes = if(end > start) start to end else end to start
+
+    val normalizedChordTones = chordTones.map(Helper.mod12(_))
+
+    potentialNotes.filter{note => normalizedChordTones.contains(Helper.mod12(note))}.toArray
+  }
+
 
 }
 

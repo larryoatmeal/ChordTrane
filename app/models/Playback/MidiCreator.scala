@@ -32,6 +32,7 @@ object MidiCreator{
 
 	val PianoChannel = 0
 	val BassChannel = 1
+	val DrumChannel = 9
 
 
 
@@ -67,8 +68,8 @@ object MidiCreator{
 	}
 
 	def BassProgram(channel: Int) = programChange(33, channel, 0)
-	def PianoProgram(channel: Int) = programChange(0, channel, 0)
-
+	def PianoProgram(channel: Int) = programChange(1, channel, 0)
+	def DrumProgram(channel: Int) = programChange(1, channel, 0)
 
 	// val sampleSequence = Array(
 	// 	Array(programChange(12, 0, 0)),
@@ -77,8 +78,6 @@ object MidiCreator{
 	// 	noteOnOff(Note.getMidiNote("E", 6), 48, QUARTER),
 	// 	noteOnOff(Note.getMidiNote("F", 6), 72, QUARTER)
 	// ).flatten
-
-	
 
 	def midiChordsToMidiEvent(midiChords: Array[MidiChord], subdivisions: Int, channel: Int) = {
 		midiChords.map{
@@ -96,9 +95,6 @@ object MidiCreator{
 			}
 		}.flatten
 	}
-
-
-
 
 	// def test = {
 	// 	val midiEvents = midiChordsToMidiEvent(PianoComper.testChords, 2)
@@ -124,10 +120,4 @@ class MidiCreator{
 		val outputFile = new File(filePath)
 		MidiSystem.write(sequence, 1, outputFile)
 	}
-	
-
-
-
-
-
 }

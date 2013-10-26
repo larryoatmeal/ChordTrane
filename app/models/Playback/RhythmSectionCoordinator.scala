@@ -37,8 +37,9 @@ class RhythmSectionCoordinator(measures: List[Measure], timeSig: Int, subdivisio
 
 	def piano = PianoPlayer.getCompingMidi(chordTemplate, style, measures.length)
 
-	def bass = BassPlayer.bassSkeleton(chordTemplate)
+	def bass = BassPlayer.getBass(chordTemplate)
 
+	def drums = Drums.SwingDrumBasic(measures.length)
 
 	def midi(path: String){
 		val master = new MidiCreator
@@ -52,6 +53,10 @@ class RhythmSectionCoordinator(measures: List[Measure], timeSig: Int, subdivisio
 		//Bass 
 		val bassMidiData = MidiCreator.BassProgram(MidiCreator.BassChannel) +: MidiCreator.singleNotesToMidiEvent(bass, subdivisions, MidiCreator.BassChannel) 
 		master.createTrack(bassMidiData)
+
+		//Drums 
+		val drumMidiData = MidiCreator.DrumProgram(MidiCreator.DrumChannel) +: MidiCreator.singleNotesToMidiEvent(drums, 3, MidiCreator.DrumChannel) 
+		master.createTrack(drumMidiData)
 
 		master.createMidi(path)
 	}

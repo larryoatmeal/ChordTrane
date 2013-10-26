@@ -24,8 +24,34 @@ object PianoPlayer{
 			case _ => JazzSwing.generateRhythmTrack(numberOfMeasures)
 		}
 
+
 		val filledInChordTemplate = fillInCompingWithChords(chordTemplate, compingPattern)
 
+		//make chords on offbeat go to next chord
+
+
+
+
+		val filledInChordTemplate2  = (0 until filledInChordTemplate.size).map{
+			index => {
+				val currentChord = filledInChordTemplate(index)
+
+
+				if(index == filledInChordTemplate.size - 1){
+					filledInChordTemplate(index)
+				}else{
+					val currentChord = filledInChordTemplate(index)
+					val nextChord = filledInChordTemplate(index + 1)
+					val currentTick = currentChord.tick					
+					val nextTick = nextChord.tick
+					if(currentTick % 2 == 1 && nextTick == currentTick + 1){//if on offbeat and there is a chord immediately after 
+						ComperTemplate(nextChord.chordGenerator, currentTick)
+					}else{
+						currentChord
+					}
+				}
+			}
+		}		
 
 		def loop(remaining: Array[ComperTemplate], out: Array[MidiChord]): Array[MidiChord] = {
 			if(remaining.isEmpty){
