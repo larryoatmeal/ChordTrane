@@ -1,0 +1,24 @@
+@(userForm: Form[website.User])
+
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(bootstrapForm.render)}
+
+<!-- User selects email, but submits ID -->
+
+
+
+
+@template("Login"){
+
+	@userForm.globalError.map { error =>
+  		<div>@error</div>
+	}
+
+	<h1>Login</h1>
+	@form(action = routes.Authentication.submitLogin, 'role-> "form"){
+		@inputText(userForm("email"), '_label -> "Email", 'class->"form-control")
+		@inputText(userForm("password"), '_label -> "Password", 'class->"form-control", 'type -> "password")
+		<button type="submit" class="btn btn-success">Submit</button>
+		<a class ="btn btn-warning" href="@routes.Application.home">Quit</a>
+	}
+}

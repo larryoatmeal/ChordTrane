@@ -9,18 +9,20 @@ case class SingleNote(note: Int, tick: Int)
 
 object BassPlayer{
 
-	val DefaultProperties = BassSettings(Note.getMidiNote("G", 1), Note.getMidiNote("G", 3), 3, 2)
-	val DefaultCenter = (DefaultProperties.lower + DefaultProperties.upper) / 2
-	val DefaultDeviation = DefaultProperties.upper - DefaultCenter
+	val DefaultBassSettings = BassSettings(Note.getMidiNote("G", 1), Note.getMidiNote("G", 3), 3, 2)
+	val DefaultCenter = (DefaultBassSettings.lower + DefaultBassSettings.upper) / 2
+	val DefaultDeviation = DefaultBassSettings.upper - DefaultCenter
 
-	def bassRangeProbability = Helper.powerProbabilityCurve(DefaultCenter, DefaultDeviation, DefaultProperties.stayInTessitura)
+
+
+	def bassRangeProbability = Helper.powerProbabilityCurve(DefaultCenter, DefaultDeviation, DefaultBassSettings.stayInTessitura)
 	def octaveShiftNecessary(note: Int) = Helper.rollDice(bassRangeProbability(note))
 	
 	def getBass(chordTemplate: Array[ComperTemplate]) = {
 		val skeleton = bassSkeleton(chordTemplate)
 
 		val notesWithChords = skeleton zip chordTemplate.map(_.chordGenerator)
-
+		
 		def loop(current: Tuple2[SingleNote, ChordGenerator], queue: Array[Tuple2[SingleNote, ChordGenerator]], out: Array[SingleNote]): Array[SingleNote] = {
 			
 			if(queue.isEmpty){
@@ -70,7 +72,7 @@ object BassPlayer{
 	}
 
 	def initialNote(note: Int) = {//Get first note
-		val desiredHeight = Helper.getRandomWithinRange(DefaultProperties.lower, DefaultProperties.upper)
+		val desiredHeight = Helper.getRandomWithinRange(DefaultBassSettings.lower, DefaultBassSettings.upper)
 		val octaveAdjust = Note.octaveAdjust(note, desiredHeight)
 
 		note + octaveAdjust

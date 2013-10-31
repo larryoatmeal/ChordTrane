@@ -1,0 +1,21 @@
+@(userForm: Form[website.User])
+
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(bootstrapForm.render)}
+
+<!-- User selects email, but submits ID -->
+
+
+@template("Sign Up"){
+	
+	<h1>Sign Up</h1>
+	@form(action = routes.Authentication.submitSignup, 'role-> "form"){
+		
+		@inputText(userForm("firstName"), '_label -> "First Name", 'class->"form-control")
+		@inputText(userForm("lastName"), '_label -> "Last Name", 'class->"form-control")
+		@inputText(userForm("email"), '_label -> "Email", 'class->"form-control")
+		@inputText(userForm("password"), '_label -> "Password", 'class->"form-control", 'type-> "password")
+		<button type="submit" class="btn btn-success">Submit</button>
+		<a class ="btn btn-warning" href="@routes.Application.home">Quit</a>
+	}
+}

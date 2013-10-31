@@ -25,7 +25,7 @@ object User extends DatabaseObject{
     } 
   }
 
-  def login(email: String, password: String): Option[User] = DB.withConnection{//returns User if successful, otherwise, return None
+  def checkCredentials(email: String, password: String): Option[Int] = DB.withConnection{//returns User if successful, otherwise, return None
   	implicit connection =>
 		val potentialUser = SQL(s"""SELECT * FROM users WHERE email = {email} AND password = {password}""").on(
 			"email" -> email,
@@ -34,9 +34,11 @@ object User extends DatabaseObject{
 
 		if(potentialUser.isEmpty) None
 		else{
-			Some(potentialUser.head)
+			Some(potentialUser.head.id)
 		}
   }
+
+  def getUser(id: Int) = getSingleWithID[User](userParser, id, "id", "users") 
 
   def updateUser(user: User) = DB.withConnection{
     implicit connection=>
@@ -55,6 +57,20 @@ object User extends DatabaseObject{
     "firstName" -> user.firstName,
     "lastName" -> user.lastName
    ).executeUpdate()
+  }
+
+
+  def addUser(user: User) = DB.withConnection{
+    implicit connection =>
+    SQL("""
+    INSERT INTO users (email, password, firstName, lastName)
+    VALUES ({email}, {password}, {firstName}, {lastName})
+    """).on(
+      "email" -> user.email,
+      "password" -> user.password,
+      "firstName" -> user.firstName,
+      "lastName" -> user.lastName
+      ).executeUpdate() == 1
   }
 
 

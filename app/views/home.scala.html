@@ -4,7 +4,12 @@
 
 @homeTemplate(title){
   <p class="navbar-text pull-right">
+
+  	<span id = "userId" data = "@user.id">
+
     <span class="label label-primary">@user.firstName @user.lastName</span> 
-    <a class="navbar-link" href = "#"><span class="glyphicon glyphicon-log-out"></span> Log out</a>
+    <a class="navbar-link" href = "@routes.Authentication.logout"><span class="glyphicon glyphicon-log-out"></span> Log out</a>
   </p>
+
+  
 }

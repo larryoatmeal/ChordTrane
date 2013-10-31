@@ -17,6 +17,7 @@ CREATE TABLE users (
 	UNIQUE (email)
 );
 
+INSERT INTO users VALUES (1, "chordtrane@gmail.com", "admin", "Admin", "Cyan");
 
 DROP TABLE IF EXISTS songs;
 
@@ -33,12 +34,10 @@ CREATE TABLE songs (
 	transposeOn			boolean 		NOT NULL,
 	romanNumeral		boolean			NOT NULL,
 
-	PRIMARY KEY(id),
-	UNIQUE (title)
+	PRIMARY KEY(id)
 );
 
-INSERT INTO songs VALUES (1, "", "Title", "Composer", "Date", 4, 0, "C", "C", 0, 0);
--- 
+INSERT INTO songs VALUES (1, "|C|", "Title", "Composer", "Date", 4, 1, "C", "C", 0, 0);
 -- 
 -- 
 

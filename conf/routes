@@ -7,11 +7,21 @@ GET     /                           controllers.Application.home
 GET     /guest                      controllers.Application.homeGuest
 
 
+#Signup
+GET 	/signup 					controllers.Authentication.signupPage
+POST 	/signup 					controllers.Authentication.submitSignup
+
+#Login
+GET 	/login 						controllers.Authentication.loginPage
+POST 	/login 						controllers.Authentication.submitLogin
+GET 	/logout						controllers.Authentication.logout
+
 #Javascript routing
 
 GET		/js/getSong					controllers.JSONmaster.getSong(id: Int)
 GET		/js/getSongs				controllers.JSONmaster.getSongs(userId: Int)
 PUT 	/js/saveSong 				controllers.JSONmaster.saveSong
+PUT		/js/newSong					controllers.JSONmaster.newSong(userId: Int)
 
 GET		/js/getPlaybackSettings		controllers.JSONmaster.getPlaybackSettings(songId: Int)
 PUT		/js/savePlaybackSettings	controllers.JSONmaster.savePlaybackSettings

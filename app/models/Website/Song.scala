@@ -13,6 +13,9 @@ case class Song(id: Int, rawText: String, title: String, composer: String,
 
 object Song extends DatabaseObject{
 
+  //when new song created
+  val BlankSong = Song(-1, "", "New Song", "Title", "Composer", 4, "C", "C", false, false, -1)
+
 
   val songParser: RowParser[Song] = {
     import anorm.~
@@ -88,6 +91,30 @@ object Song extends DatabaseObject{
     val path = s"public/MusicXML/${song.title}.mid"
     models.Master.playback(songConversion(song), path)
     path
+  }
+
+  def newSong(userId: Int) = DB.withConnection{
+    implicit connection => 
+    val songId = SQL(
+      """
+      INSERT INTO songs (rawText, title, composer, dateCreated, timeSig, userId, currentKey, destinationKey, transposeOn, romanNumeral)
+      VALUES ({rawText}, {title}, {composer}, {dateCreated}, {timeSig}, {userId}, {currentKey}, {destinationKey}, {transposeOn}, {romanNumeral})
+      """).on(
+        "rawText" -> BlankSong.rawText,
+        "title" -> BlankSong.title,
+        "composer" -> BlankSong.composer,
+        "dateCreated" -> BlankSong.dateCreated,
+        "timeSig" -> BlankSong.timeSig,
+        "userId" -> userId,
+        "currentKey" -> BlankSong.currentKey,
+        "destinationKey" -> BlankSong.destinationKey,
+        "transposeOn" -> BlankSong.transposeOn,
+        "romanNumeral" -> BlankSong.romanNumeral
+        ).executeInsert().get.toInt //returns id of song added
+
+    PlaybackSettings.newPlaybackSettings(songId)
+
+    songId
   }
 
 

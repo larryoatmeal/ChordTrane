@@ -17,6 +17,9 @@ case class PlaybackSettings(songId: Int, bpm: Int, repeats: Int, pianoSettings: 
 
 object PlaybackSettings extends DatabaseObject{
 
+
+  val DefaultPlaybackSettings = PlaybackSettings(-1, 120, 3, PianoPlayer.DefaultPianoSettings, BassPlayer.DefaultBassSettings)
+
   val playbackSettingsParser: RowParser[PlaybackSettings] = {
     import anorm.~
     get[Int]("songId") ~ 
@@ -69,6 +72,38 @@ object PlaybackSettings extends DatabaseObject{
     "bassMaxRange" -> playbackSettings.bassSettings.upper,
     "bassStayInTessitura" -> playbackSettings.bassSettings.stayInTessitura,
     "bassConnectivity" -> playbackSettings.bassSettings.connectivity
+   ).executeUpdate()
+  }
+
+  def newPlaybackSettings(songId: Int) = DB.withConnection{
+    implicit connection=>
+    SQL("""
+    INSERT INTO playbackSettings (bpm, repeats, pianoMinRange, pianoMaxRange, pianoStayInTessitura, pianoConnectivity, bassMinRange, bassMaxRange, bassStayInTessitura, bassConnectivity, songId)
+    VALUES 
+    ({bpm},
+    {repeats},
+    {pianoMinRange},
+    {pianoMaxRange},
+    {pianoStayInTessitura},
+    {pianoConnectivity},
+    {bassMinRange},
+    {bassMaxRange},
+    {bassStayInTessitura},
+    {bassConnectivity},
+    {songId})
+    """
+    ).on(
+    "songId" -> songId,
+    "bpm" -> DefaultPlaybackSettings.bpm,
+    "repeats" -> DefaultPlaybackSettings.repeats,
+    "pianoMinRange" -> DefaultPlaybackSettings.pianoSettings.lower,
+    "pianoMaxRange" -> DefaultPlaybackSettings.pianoSettings.upper,
+    "pianoStayInTessitura" -> DefaultPlaybackSettings.pianoSettings.stayInTessitura,
+    "pianoConnectivity" -> DefaultPlaybackSettings.pianoSettings.connectivity,
+    "bassMinRange" -> DefaultPlaybackSettings.bassSettings.lower,
+    "bassMaxRange" -> DefaultPlaybackSettings.bassSettings.upper,
+    "bassStayInTessitura" -> DefaultPlaybackSettings.bassSettings.stayInTessitura,
+    "bassConnectivity" -> DefaultPlaybackSettings.bassSettings.connectivity
    ).executeUpdate()
   }
 

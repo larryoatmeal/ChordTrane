@@ -6,6 +6,7 @@ import play.api.data.Forms._
 import models._
 
 
+
 trait Secured {
 
   //Get connected user's id

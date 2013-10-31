@@ -3,12 +3,7 @@
 
 @template(title){
     <style>
-            body {
-              background-color: #eee;
-              font-family:"Tahoma";/* <-- fonts */
-              padding-top: 70px;
-              padding-bottom: 30px;
-            }
+            
             #rawText
             {
                 font-family:"Courier New", monospace;
@@ -55,11 +50,7 @@
             </div>
             <div class="collapse navbar-collapse">
               <ul class="nav navbar-nav">
-                <li class="active"><a href="#">File</a></li>
-                <li><a href="#about">View</a></li>
-                <li><a href="#contact">Playback</a></li>
-                <li><a href="#contact">Transpose</a></li>
-                <li><a href="#contact">MusicXML</a></li>
+                <li><a href="#about">Settings</a></li>
               </ul>
 
               @loginStatus
@@ -69,7 +60,11 @@
         </div>
 
         <div class="row">
-            <h1><span id="titleDisplay">Title</span> <a class="btn btn-success" id="save">Save</a></h1>
+            <h1><select id="songDropdown"></select> 
+            <a class="btn btn-success" id="save">Save <span class="glyphicon glyphicon-floppy-disk"></span></span></a>
+            <a class="btn btn-primary" id="new">New</a>
+
+            </h1>
 
         </div>
 

@@ -1,0 +1,29 @@
+@(elements: views.html.helper.FieldElements)
+
+@import play.api.i18n._
+@import views.html.helper._
+
+
+<div class="form-group @if(elements.hasErrors){has-error}">
+  	<label class-"control-label">@elements.label</label>
+    @elements.input
+    @if(elements.hasErrors){
+      <span class="help-block">@elements.errors.mkString("", " , ", "")</span>
+    }
+</div>
+
+
+
+
+@{/*   FOR BOOTSTRAP 2
+<div class="@if(elements.hasErrors){control-group error}">
+  <label class-"control-label">@elements.label</label>
+  <div class="controls">
+    @elements.input
+    @if(elements.hasErrors){
+      <span class="help-inline">@elements.errors.mkString("", " , ", "")</span>
+    }
+  </div>
+</div>
+
+*/}

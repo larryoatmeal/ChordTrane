@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	$( "#eq > span" ).each(function() {
       // read initial vals from markup and remove that
-      var val = parseInt( $( this ).text(), 10 );
+      var val = toInt( $( this ).text());
       $( this ).empty().slider({
         val: val,
         range: "min",
@@ -12,6 +12,8 @@ $(document).ready(function(){
 
 
   var GUEST_USER_ID = 1
+  var userId = toInt($("#userId").attr("data"))
+
 
   //Song
   var song 
@@ -38,7 +40,18 @@ $(document).ready(function(){
   // var bassStayInTessitura
   // var bassConnectivity
 
-  getSong(1)
+
+  var songList
+
+  initialize()
+
+  function initialize(){
+    getSongs(function(){
+      var firstSongId = toInt($("#songDropdown").first().val())
+      getSong(firstSongId)
+    })
+  }
+
 
   function getSong(id){
     jsRoutes.controllers.JSONmaster.getSong(id).ajax({
@@ -49,6 +62,30 @@ $(document).ready(function(){
         updateSongFieldDisplay()
         printFormattedText(song)
         getPlaybackSettings(id)
+      },
+      error: function(err){
+        alert("Error opening song")
+      }
+    })
+  }
+
+  $("#new").on("click", function(){
+    newSong()
+  })
+
+  function newSong(){
+    jsRoutes.controllers.JSONmaster.newSong(userId).ajax({
+      success: function(data){
+        var newSongId = toInt(data)
+
+        getSongs(function(){
+          getSong(newSongId)
+          $('#songDropdown').val(newSongId)
+        })
+
+        updateSongFieldDisplay()
+        printFormattedText(song)
+        getPlaybackSettings(newSongId)
       },
       error: function(err){
         alert("Error opening song")
@@ -81,9 +118,26 @@ $(document).ready(function(){
     $("#rawText").val(song.rawText)
   }
 
+  function updatePlaybackSettings(){
+    $("#bpm").val(playbackSettings.bpm)
+    $("#repeats").val(playbackSettings.repeats)
+    $("#composer").val(song.composer)
+    $("#dateCreated").val(song.dateCreated)
+    $("#timeSig").val(song.timeSig)
+    $("#currentKey").val(song.currentKey)
+    $("#destinationKey").val(song.destinationKey)
+    $("#transposeOn").attr('checked', song.transposeOn);
+    $("#romanNumeral").attr('checked', song.romanNumeral);
+    $("#rawText").val(song.rawText)
+  }
+
   $("#save").on("click", function(){
     saveSong()
   })
+
+  $('#rawText').blur(function(){//when focus leaves rawText, automatically save
+    saveSong()
+  });
 
 
 
@@ -141,7 +195,8 @@ $(document).ready(function(){
       
         $("#renderedText").html(formatted)
       },
-      error: function(){
+      error: function(error){
+        $("#renderedText").html("Error")
       },
       data: songJSON,
       contentType: "application/json"
@@ -189,6 +244,63 @@ $(document).ready(function(){
     }
     )
   })
+
+
+  function getSongs(loadFunction){
+    //if no user (on guest account)
+    if(isNaN(userId)){
+      jsRoutes.controllers.JSONmaster.getSongs(GUEST_USER_ID).ajax(
+        {
+          success: function(data){
+            songList = data
+            populateSongDropdown()
+            loadFunction()
+          },
+          error: function(){
+          }
+        }
+      )
+    }else{
+      jsRoutes.controllers.JSONmaster.getSongs(userId).ajax(
+        {
+          success: function(data){
+            songList = data
+            populateSongDropdown()
+            console.log(data)
+            loadFunction()
+          },
+          error: function(){
+          }
+        }
+      )
+    }
+  }
+
+  function populateSongDropdown(){
+    $("#songDropdown").empty()//clear first
+
+    for (var i = 0; i < songList.length; i++){
+
+      $("#songDropdown").append(
+        $('<option>').text(songList[i].label).val(songList[i].id)
+      )
+    }
+  }
+
+  $("#songDropdown").change(function(){
+
+    getSong(toInt($("#songDropdown option:selected").val()))
+  })
+
+  function currentSongId(){
+    var songId = toInt($("#songDropdown option:selected").val())
+    alert(songId)
+    return songId
+  }
+
+  function toInt(stringRepresentation){
+    return parseInt(stringRepresentation, 10)
+  }
 
 
 
