@@ -15,7 +15,7 @@ object SeventhGenerator{//4 notes. Doesn't have to be an actual seventh
 
   //These are intervals
   import models.Interval._
-
+  
   val Maj7 = SeventhIntervals(M3, P5, M7)
   val Min7 = SeventhIntervals(m3, P5, m7)
   val Dom7 = SeventhIntervals(M3, P5, m7)

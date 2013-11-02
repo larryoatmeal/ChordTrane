@@ -1,0 +1,1 @@
+web: target/start -Dhttp.port=${PORT} -DapplyEvolutions.default=false -Ddb.default.url=$CLEARDB_DATABASE_URL

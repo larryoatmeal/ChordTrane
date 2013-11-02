@@ -50,11 +50,9 @@
             </div>
             <div class="collapse navbar-collapse">
               <ul class="nav navbar-nav">
-                <li><a href="#about">Settings</a></li>
               </ul>
 
               @loginStatus
-
             </div><!--/.nav-collapse -->
           </div>
         </div>
@@ -63,6 +61,7 @@
             <h1><select id="songDropdown"></select> 
             <a class="btn btn-success" id="save">Save <span class="glyphicon glyphicon-floppy-disk"></span></span></a>
             <a class="btn btn-primary" id="new">New</a>
+            <a class="btn btn-default"id="generateMusic">Generate Music</a>
 
             </h1>
 
@@ -76,7 +75,9 @@
                 <pre id="renderedText"></pre>
         </div>
 
-        <div class="row">
+
+         <div class="row">
+         <!--
             <div class="col-md-6" id="playbackPanel">
                 <h3>Playback</h3>
                 <form role="form">
@@ -97,7 +98,6 @@
                     <a class="btn btn-success"id="play"><span class="glyphicon glyphicon-play"></span> Play</a>
                     <a class="btn btn-warning" id="pause"><span class="glyphicon glyphicon-pause"></span> Pause</a>
                     <a class="btn btn-danger" id="stop"><span class="glyphicon glyphicon-stop"></span> Stop</a>
-                    <!-- <embed src="@routes.Assets.at("midioutput/Elite4Pokemon.mid")"> -->
 
                    
                     
@@ -114,8 +114,11 @@
 
 
 
-            </div>
-            <div class="col-md-6" id="toolsPanel">
+            </div> -->
+
+
+
+            <div class="col-md-12" id="toolsPanel">
                 <h3>Settings</h3>
                  <form role="form">
                     <div class="form-group">
@@ -173,7 +176,7 @@
                         <input type="checkbox" id="romanNumeral">
                     </div>
 
-                    <a class="btn btn-info" id="exportText"><span class="glyphicon glyphicon-download" ></span> Export Text</a>
+                    <!-- <a class="btn btn-info" id="exportText"><span class="glyphicon glyphicon-download" ></span> Export Text</a> -->
                     <a class="btn btn-info" id="exportMusicXML"><span class="glyphicon glyphicon-download"></span> Export MusicXML</a>
 
                     <br>
@@ -193,8 +196,6 @@
                     </div>
                     
                     
-                    
-
                    
                 </form>
 

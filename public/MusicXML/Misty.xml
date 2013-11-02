@@ -2,9 +2,9 @@
 <!DOCTYPE score-partwise PUBLIC "-//Recordare//DTD MusicXML 3.0 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
 <score-partwise version="3.0">
 
-			<movement-title>title</movement-title>
+			<movement-title>Misty</movement-title>
 			<identification>
-				<creator type="composer">composer</creator>
+				<creator type="composer">Errol Garner</creator>
 			</identification>
 			<part-list>
 			<score-part id="P1">
@@ -16,7 +16,7 @@
 			<measure number="1">
 							<attributes>
 							<divisions>1</divisions><key>
-								<fifths>5</fifths>
+								<fifths>-1</fifths>
 								</key><time>
 								<beats>4</beats>
 								<beat-type>4</beat-type>
@@ -30,14 +30,14 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>B</root-step>
+								          <root-step>F</root-step>
 								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="maj7">major-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>B</step>
+											<step>F</step>
 											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
@@ -49,32 +49,21 @@
 										<type>quarter</type>
 									</note><harmony>	
 								        <root>
-								          <root-step>D</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>A</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="m7">minor-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>D</step>
-											<alter>1</alter>
+											<step>A</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
 										<type>quarter</type>
-									</note><harmony>	
-								        <root>
-								          <root-step>C</root-step>
-								          <root-alter>1</root-alter>
-								        </root>
-								        <kind halign="center" text="m7">minor-seventh</kind>
-								        
-						       	 	</harmony><note>
-										<pitch>
-											<step>C</step>
-											<alter>1</alter>
-											<octave>4</octave>
-										</pitch>
+									</note><note>
+										<rest></rest>
 										<duration>1</duration>
 										<type>quarter</type>
 									</note>
@@ -85,15 +74,15 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>F</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>C</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="m7">minor-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>F</step>
-											<alter>1</alter>
+											<step>C</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -104,14 +93,14 @@
 										<type>quarter</type>
 									</note><harmony>	
 								        <root>
-								          <root-step>B</root-step>
+								          <root-step>F</root-step>
 								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="7">dominant</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>B</step>
+											<step>F</step>
 											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
@@ -129,15 +118,15 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>E</root-step>
-								          <root-alter>0</root-alter>
+								          <root-step>B</root-step>
+								          <root-alter>-1</root-alter>
 								        </root>
 								        <kind halign="center" text="maj7">major-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>E</step>
-											<alter>0</alter>
+											<step>B</step>
+											<alter>-1</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -162,15 +151,15 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>E</root-step>
-								          <root-alter>0</root-alter>
+								          <root-step>B</root-step>
+								          <root-alter>-1</root-alter>
 								        </root>
 								        <kind halign="center" text="m7">minor-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>E</step>
-											<alter>0</alter>
+											<step>B</step>
+											<alter>-1</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -181,15 +170,15 @@
 										<type>quarter</type>
 									</note><harmony>	
 								        <root>
-								          <root-step>A</root-step>
-								          <root-alter>0</root-alter>
+								          <root-step>E</root-step>
+								          <root-alter>-1</root-alter>
 								        </root>
 								        <kind halign="center" text="7">dominant</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>A</step>
-											<alter>0</alter>
+											<step>E</step>
+											<alter>-1</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -206,14 +195,14 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>B</root-step>
+								          <root-step>F</root-step>
 								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="maj7">major-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>B</step>
+											<step>F</step>
 											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
@@ -225,15 +214,15 @@
 										<type>quarter</type>
 									</note><harmony>	
 								        <root>
-								          <root-step>G</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>D</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="m7">minor-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>G</step>
-											<alter>1</alter>
+											<step>D</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -250,15 +239,15 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>C</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>G</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="m7">minor-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>C</step>
-											<alter>1</alter>
+											<step>G</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -269,15 +258,15 @@
 										<type>quarter</type>
 									</note><harmony>	
 								        <root>
-								          <root-step>F</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>C</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="7">dominant</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>F</step>
-											<alter>1</alter>
+											<step>C</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -294,15 +283,15 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>D</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>A</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="m7">minor-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>D</step>
-											<alter>1</alter>
+											<step>A</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -313,15 +302,15 @@
 										<type>quarter</type>
 									</note><harmony>	
 								        <root>
-								          <root-step>G</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>D</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="7">dominant</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>G</step>
-											<alter>1</alter>
+											<step>D</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -338,15 +327,15 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>C</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>G</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="m7">minor-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>C</step>
-											<alter>1</alter>
+											<step>G</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -357,15 +346,15 @@
 										<type>quarter</type>
 									</note><harmony>	
 								        <root>
-								          <root-step>F</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>C</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="7">dominant</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>F</step>
-											<alter>1</alter>
+											<step>C</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -382,14 +371,14 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>B</root-step>
+								          <root-step>F</root-step>
 								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="maj7">major-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>B</step>
+											<step>F</step>
 											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
@@ -415,15 +404,15 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>F</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>C</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="m7">minor-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>F</step>
-											<alter>1</alter>
+											<step>C</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -434,14 +423,14 @@
 										<type>quarter</type>
 									</note><harmony>	
 								        <root>
-								          <root-step>B</root-step>
+								          <root-step>F</root-step>
 								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="7">dominant</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>B</step>
+											<step>F</step>
 											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
@@ -459,15 +448,15 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>E</root-step>
-								          <root-alter>0</root-alter>
+								          <root-step>B</root-step>
+								          <root-alter>-1</root-alter>
 								        </root>
 								        <kind halign="center" text="maj7">major-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>E</step>
-											<alter>0</alter>
+											<step>B</step>
+											<alter>-1</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -492,15 +481,15 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>E</root-step>
-								          <root-alter>0</root-alter>
+								          <root-step>B</root-step>
+								          <root-alter>-1</root-alter>
 								        </root>
 								        <kind halign="center" text="m7">minor-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>E</step>
-											<alter>0</alter>
+											<step>B</step>
+											<alter>-1</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -511,15 +500,15 @@
 										<type>quarter</type>
 									</note><harmony>	
 								        <root>
-								          <root-step>A</root-step>
-								          <root-alter>0</root-alter>
+								          <root-step>E</root-step>
+								          <root-alter>-1</root-alter>
 								        </root>
 								        <kind halign="center" text="7">dominant</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>A</step>
-											<alter>0</alter>
+											<step>E</step>
+											<alter>-1</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -536,14 +525,14 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>B</root-step>
+								          <root-step>F</root-step>
 								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="maj7">major-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>B</step>
+											<step>F</step>
 											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
@@ -555,15 +544,15 @@
 										<type>quarter</type>
 									</note><harmony>	
 								        <root>
-								          <root-step>G</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>D</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="m7">minor-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>G</step>
-											<alter>1</alter>
+											<step>D</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -580,15 +569,15 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>C</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>G</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="m7">minor-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>C</step>
-											<alter>1</alter>
+											<step>G</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -599,15 +588,15 @@
 										<type>quarter</type>
 									</note><harmony>	
 								        <root>
-								          <root-step>F</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>C</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="7">dominant</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>F</step>
-											<alter>1</alter>
+											<step>C</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -624,14 +613,14 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>B</root-step>
+								          <root-step>F</root-step>
 								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="maj7">major-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>B</step>
+											<step>F</step>
 											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
@@ -657,14 +646,14 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>B</root-step>
+								          <root-step>F</root-step>
 								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="maj7">major-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>B</step>
+											<step>F</step>
 											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
@@ -690,15 +679,15 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>F</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>C</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="m7">minor-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>F</step>
-											<alter>1</alter>
+											<step>C</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -723,14 +712,14 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>B</root-step>
+								          <root-step>F</root-step>
 								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="7">dominant</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>B</step>
+											<step>F</step>
 											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
@@ -756,15 +745,15 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>E</root-step>
-								          <root-alter>0</root-alter>
+								          <root-step>B</root-step>
+								          <root-alter>-1</root-alter>
 								        </root>
 								        <kind halign="center" text="maj7">major-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>E</step>
-											<alter>0</alter>
+											<step>B</step>
+											<alter>-1</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -789,15 +778,15 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>E</root-step>
-								          <root-alter>0</root-alter>
+								          <root-step>B</root-step>
+								          <root-alter>-1</root-alter>
 								        </root>
 								        <kind halign="center" text="maj7">major-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>E</step>
-											<alter>0</alter>
+											<step>B</step>
+											<alter>-1</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -822,15 +811,15 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>E</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>B</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="m7">minor-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>E</step>
-											<alter>1</alter>
+											<step>B</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -855,15 +844,15 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>A</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>E</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="7">dominant</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>A</step>
-											<alter>1</alter>
+											<step>E</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -874,15 +863,15 @@
 										<type>quarter</type>
 									</note><harmony>	
 								        <root>
-								          <root-step>C</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>G</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="7">dominant</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>C</step>
-											<alter>1</alter>
+											<step>G</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -899,15 +888,15 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>D</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>A</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="m7b5">half-diminished</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>D</step>
-											<alter>1</alter>
+											<step>A</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -918,15 +907,15 @@
 										<type>quarter</type>
 									</note><harmony>	
 								        <root>
-								          <root-step>G</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>D</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
-								        <kind halign="center" text="7b9">other</kind>
+								        <kind halign="center" text="7">dominant</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>G</step>
-											<alter>1</alter>
+											<step>D</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -943,15 +932,15 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>C</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>G</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="m7">minor-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>C</step>
-											<alter>1</alter>
+											<step>G</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -962,15 +951,15 @@
 										<type>quarter</type>
 									</note><harmony>	
 								        <root>
-								          <root-step>F</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>C</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="7">dominant</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>F</step>
-											<alter>1</alter>
+											<step>C</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -987,14 +976,14 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>B</root-step>
+								          <root-step>F</root-step>
 								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="maj7">major-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>B</step>
+											<step>F</step>
 											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
@@ -1020,15 +1009,15 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>F</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>C</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="m7">minor-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>F</step>
-											<alter>1</alter>
+											<step>C</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -1039,14 +1028,14 @@
 										<type>quarter</type>
 									</note><harmony>	
 								        <root>
-								          <root-step>B</root-step>
+								          <root-step>F</root-step>
 								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="7">dominant</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>B</step>
+											<step>F</step>
 											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
@@ -1064,15 +1053,15 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>E</root-step>
-								          <root-alter>0</root-alter>
+								          <root-step>B</root-step>
+								          <root-alter>-1</root-alter>
 								        </root>
 								        <kind halign="center" text="maj7">major-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>E</step>
-											<alter>0</alter>
+											<step>B</step>
+											<alter>-1</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -1097,15 +1086,15 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>E</root-step>
-								          <root-alter>0</root-alter>
+								          <root-step>B</root-step>
+								          <root-alter>-1</root-alter>
 								        </root>
 								        <kind halign="center" text="m7">minor-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>E</step>
-											<alter>0</alter>
+											<step>B</step>
+											<alter>-1</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -1116,15 +1105,15 @@
 										<type>quarter</type>
 									</note><harmony>	
 								        <root>
-								          <root-step>A</root-step>
-								          <root-alter>0</root-alter>
+								          <root-step>E</root-step>
+								          <root-alter>-1</root-alter>
 								        </root>
 								        <kind halign="center" text="7">dominant</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>A</step>
-											<alter>0</alter>
+											<step>E</step>
+											<alter>-1</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -1141,14 +1130,14 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>B</root-step>
+								          <root-step>F</root-step>
 								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="maj7">major-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>B</step>
+											<step>F</step>
 											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
@@ -1160,15 +1149,15 @@
 										<type>quarter</type>
 									</note><harmony>	
 								        <root>
-								          <root-step>G</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>D</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="m7">minor-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>G</step>
-											<alter>1</alter>
+											<step>D</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -1185,15 +1174,15 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>C</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>G</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="m7">minor-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>C</step>
-											<alter>1</alter>
+											<step>G</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -1204,15 +1193,15 @@
 										<type>quarter</type>
 									</note><harmony>	
 								        <root>
-								          <root-step>F</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>C</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="7">dominant</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>F</step>
-											<alter>1</alter>
+											<step>C</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -1229,15 +1218,15 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>D</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>A</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="m7">minor-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>D</step>
-											<alter>1</alter>
+											<step>A</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -1248,15 +1237,15 @@
 										<type>quarter</type>
 									</note><harmony>	
 								        <root>
-								          <root-step>G</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>D</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="7">dominant</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>G</step>
-											<alter>1</alter>
+											<step>D</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -1273,15 +1262,15 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>C</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>G</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="m7">minor-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>C</step>
-											<alter>1</alter>
+											<step>G</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -1292,15 +1281,15 @@
 										<type>quarter</type>
 									</note><harmony>	
 								        <root>
-								          <root-step>F</root-step>
-								          <root-alter>1</root-alter>
+								          <root-step>C</root-step>
+								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="7">dominant</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>F</step>
-											<alter>1</alter>
+											<step>C</step>
+											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>
 										<duration>1</duration>
@@ -1317,14 +1306,47 @@
 						
 					<harmony>	
 								        <root>
-								          <root-step>B</root-step>
+								          <root-step>F</root-step>
 								          <root-alter>0</root-alter>
 								        </root>
 								        <kind halign="center" text="maj7">major-seventh</kind>
 								        
 						       	 	</harmony><note>
 										<pitch>
-											<step>B</step>
+											<step>F</step>
+											<alter>0</alter>
+											<octave>4</octave>
+										</pitch>
+										<duration>1</duration>
+										<type>quarter</type>
+									</note><note>
+										<rest></rest>
+										<duration>1</duration>
+										<type>quarter</type>
+									</note><note>
+										<rest></rest>
+										<duration>1</duration>
+										<type>quarter</type>
+									</note><note>
+										<rest></rest>
+										<duration>1</duration>
+										<type>quarter</type>
+									</note>
+					</measure><measure number="34">
+							<attributes>
+							
+							</attributes>
+						
+					<harmony>	
+								        <root>
+								          <root-step>F</root-step>
+								          <root-alter>0</root-alter>
+								        </root>
+								        <kind halign="center" text="maj7">major-seventh</kind>
+								        
+						       	 	</harmony><note>
+										<pitch>
+											<step>F</step>
 											<alter>0</alter>
 											<octave>4</octave>
 										</pitch>

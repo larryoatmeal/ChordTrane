@@ -123,9 +123,9 @@ object MusicXMLGenerator{
 
 		<score-partwise version="3.0">
 
-			<movement-title>title</movement-title>
+			<movement-title>{title}</movement-title>
 			<identification>
-				<creator type="composer">composer</creator>
+				<creator type="composer">{composer}</creator>
 			</identification>
 			<part-list>
 			<score-part id="P1">
