@@ -31,8 +31,13 @@ object Authentication extends Controller{
     userForm.bindFromRequest.fold(
       formWithErrors => Ok(views.html.signup(formWithErrors)),
       value => {
-        User.addUser(value)
-        Redirect(routes.Application.home())
+        val userId = User.addUser(value)
+        //When User created, add intial new song
+        Song.newSong(userId)
+
+        Redirect(routes.Application.home()).withSession(
+          "id" -> userId.toString
+        )
       }
     )
   }

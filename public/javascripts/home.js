@@ -12,8 +12,8 @@ $(document).ready(function(){
 
 
   var GUEST_USER_ID = 1
-  var userId = toInt($("#userId").attr("data"))
-
+  var userIdPrecursor = toInt($("#userId").attr("data"))
+  var userId = function(){if(isNaN(userIdPrecursor)){return GUEST_USER_ID}else{return userIdPrecursor}}()
 
   //Song
   var song 
@@ -138,6 +138,22 @@ $(document).ready(function(){
   $('#rawText').blur(function(){//when focus leaves rawText, automatically save
     saveSong()
   });
+  
+  $('#currentKey').change(function(){//when focus leaves rawText, automatically save
+    saveSong()
+  });
+
+  $('#destinationKey').change(function(){//when focus leaves rawText, automatically save
+    saveSong()
+  });
+
+  $('#transposeOn').change(function(){//when focus leaves rawText, automatically save
+    saveSong()
+  });
+
+  $('#romanNumeral').change(function(){//when focus leaves rawText, automatically save
+    saveSong()
+  });
 
 
 
@@ -248,32 +264,18 @@ $(document).ready(function(){
 
   function getSongs(loadFunction){
     //if no user (on guest account)
-    if(isNaN(userId)){
-      jsRoutes.controllers.JSONmaster.getSongs(GUEST_USER_ID).ajax(
-        {
-          success: function(data){
-            songList = data
-            populateSongDropdown()
-            loadFunction()
-          },
-          error: function(){
-          }
+    jsRoutes.controllers.JSONmaster.getSongs(userId).ajax(
+      {
+        success: function(data){
+          songList = data
+          populateSongDropdown()
+          console.log(data)
+          loadFunction()
+        },
+        error: function(){
         }
-      )
-    }else{
-      jsRoutes.controllers.JSONmaster.getSongs(userId).ajax(
-        {
-          success: function(data){
-            songList = data
-            populateSongDropdown()
-            console.log(data)
-            loadFunction()
-          },
-          error: function(){
-          }
-        }
-      )
-    }
+      }
+    )
   }
 
   function populateSongDropdown(){

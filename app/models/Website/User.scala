@@ -70,7 +70,7 @@ object User extends DatabaseObject{
       "password" -> user.password,
       "firstName" -> user.firstName,
       "lastName" -> user.lastName
-      ).executeUpdate() == 1
+      ).executeInsert().get.toInt
   }
 
 

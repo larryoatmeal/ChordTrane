@@ -10,7 +10,7 @@ object Formatter{
 		//Find longest chord
 		val musicLines = allLines.lines.collect{case musicLine: MusicLine => musicLine}
 		val lengthsOfChordStrings = musicLines.flatMap(_.measures.flatMap(_.chords.map(chordString(_).length))) 
-		val longestChordLength = lengthsOfChordStrings.max
+		val longestChordLength = if(lengthsOfChordStrings.isEmpty){0}else{lengthsOfChordStrings.max}
 
 
 		//println(longestChordLength)

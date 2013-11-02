@@ -39,14 +39,15 @@ object Master{
 		)
 		//tranpose if necessary
 		val modifiedLines: AllLines = 
-		if (song.transpose){
-			val Transposer = new Transpose(song.currentKey, song.destinationKey)
-			linesModifyChords(Transposer.transpose(_))
-		}
-		else if(song.roman){
+		if(song.roman){
 			val Romanizer = new Roman(song.currentKey)
 			linesModifyChords(Romanizer.romanize(_))
 		}
+		else if (song.transpose){
+			val Transposer = new Transpose(song.currentKey, song.destinationKey)
+			linesModifyChords(Transposer.transpose(_))
+		}
+		
 		else{
 				allLines
 		}
