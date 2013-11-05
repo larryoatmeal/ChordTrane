@@ -117,6 +117,15 @@ object Song extends DatabaseObject{
     songId
   }
 
+  def deleteSong(songId: Int) = DB.withConnection{
+    implicit connection =>
+    SQL("""
+      DELETE FROM songs WHERE id = {songId}
+      """).on(
+        "songId" -> songId
+      ).executeUpdate()
+  }
+
 
 
  

@@ -63,7 +63,7 @@ object Authentication extends Controller{
       "password" -> nonEmptyText
     )
     ((email, password) => User(-1, email, password, "", ""))//firstName, lastName unused
-    (user => Some(user.email, user.password)).verifying(
+    (user => Some(user.email, user.password)).verifying("Invalid email or password", 
       u => !User.checkCredentials(u.email, u.password).isEmpty//check if valid
     )
   )

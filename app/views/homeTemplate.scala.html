@@ -34,6 +34,12 @@
             {
                 height:120px; float:left; margin:15px
             }
+            .modal .modal-dialog {
+            /* new custom width */
+            width: 70%;
+            /* must be half of the width, minus scrollbar on the left (30px) */
+            /*margin-left: -280px;*/
+            }
     </style> 
 
     <body>
@@ -50,6 +56,8 @@
             </div>
             <div class="collapse navbar-collapse">
               <ul class="nav navbar-nav">
+              <li><a class = "navbar-link" id = "help" data-toggle="modal" data-target="#helpModal">Help</a></li>
+              <li><a class = "navbar-link" id ="about" data-toggle="modal" data-target="#aboutModal">About</a></li>
               </ul>
 
               @loginStatus
@@ -199,8 +207,115 @@
                    
                 </form>
 
+                <a class="btn btn-danger" id="delete">Delete <span class="glyphicon glyphicon-trash"></span></a>
+
             </div>
         </div>
+
+  
+
+        <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Help</h4>
+              </div>
+              <div class="modal-body">
+              <pre>
+
+<h4><b>What it is</b></h4>
+ChordTrane takes chord charts inputted as text and uses algorithms 
+and patterns to emulate the playback of a jazz rhythm section. 
+Type in the chords to your favorite jazz standards and play along!
+
+<h4><b>Syntax</b></h4>
+Type in chord charts as text
+
+Ex:
+| Cmaj7 Am7 | Dm7 G7 G7b9 |
+| Em7 A7.4 | Dm7 G7|
+
+
+ChordTrane will autoformat it to:
+
+|Cmaj7 /     Am7   /     |Dm7   /     G7    G7b9  |
+|Em7   /     /     A7    |Dm7   /     G7    /     |
+
+-Specify measures with beginning and ending "|" character
+-Separate chords in measures with spaces
+-Chords will be placed on default beats
+  -To override default, add ".beatNumber" to the end of the chord
+  -"Cm7.2" will set Cm7 to the second beat of the measure
+
+Chords
+-Begin each chord with the root, ex: "G", "F#", "Ab"
+-Add suffix after root, ex: "m7", "maj7", "dim"
+-For slash chords, add "/rootName" after chord, ex: "G7/D", "Ab/Gb"
+
+<h4><b>Playback</b></h4>
+-Click "Generate Music"
+-Generate .mid (MIDI) playback
+-Eachtime you generate -> different playback.
+-Play in music players, open in music sequences, open in music notation programs
+
+<h4><b>Tranpose</b></h4>
+-Transpose to any key or create Roman Numeral chords
+
+<h4><b>Export to MusicXML</b></h4>
+-MusicXML is a common data format used by most major notation softwares, including:
+  -Finale
+  -Sibelius
+  -Noteflight
+  -Musescore
+  -and many more...
+-With click of a button, ChordTrane will create a MusicXML from your chord text
+-Open up MusicXML in your notation software to have printable chord sheet
+
+<h4><b>Future features</b></h4>
+-More playback styles
+-In browser playback
+  -Set tempo
+  -Adjust algorithm paramaters
+
+
+              </pre>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+
+        <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">About</h4>
+              </div>
+              <div class="modal-body">
+              <pre>
+
+Thanks for using ChordTrane :)
+Created by larryoatmeal
+<a href="mailto:chordtrane@@gmail.com?Subject=Hello" target="_top">chordtrane@@gmail.com</a>
+
+Special thanks to spidaman
+
+              </pre>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+
+
 
 
     </body>

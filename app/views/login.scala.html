@@ -11,7 +11,7 @@
 @template("Login"){
 
 	@userForm.globalError.map { error =>
-  		<div>@error</div>
+  		<div class="alert alert-danger">Invalid Email or Password</div>
 	}
 
 	<h1>Login</h1>

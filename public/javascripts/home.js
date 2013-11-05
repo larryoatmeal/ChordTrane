@@ -12,9 +12,10 @@ $(document).ready(function(){
 
 
   var GUEST_USER_ID = 1
-  var userIdPrecursor = toInt($("#userId").attr("data"))
-  var userId = function(){if(isNaN(userIdPrecursor)){return GUEST_USER_ID}else{return userIdPrecursor}}()
+  var userIdPrecursor 
+  var userId
 
+  
   //Song
   var song 
   //part of song
@@ -46,6 +47,9 @@ $(document).ready(function(){
   initialize()
 
   function initialize(){
+    userIdPrecursor = toInt($("#userId").attr("data"))
+    userId = function(){if(isNaN(userIdPrecursor)){return GUEST_USER_ID}else{return userIdPrecursor}}()
+
     getSongs(function(){
       var firstSongId = toInt($("#songDropdown").first().val())
       getSong(firstSongId)
@@ -78,6 +82,8 @@ $(document).ready(function(){
       success: function(data){
         var newSongId = toInt(data)
 
+
+
         getSongs(function(){
           getSong(newSongId)
           $('#songDropdown').val(newSongId)
@@ -92,6 +98,30 @@ $(document).ready(function(){
       }
     })
   }
+
+  $("#delete").on("click", function(){
+    deleteSong()
+  })
+
+  function deleteSong(){
+    jsRoutes.controllers.JSONmaster.deleteSong(song.id).ajax({
+      success: function(data){
+
+        getSongs(function(){
+          getSong(toInt($("#songDropdown").first().val()))//get first song in dropdown
+        })
+
+        updateSongFieldDisplay()
+        printFormattedText(song)
+        getPlaybackSettings(newSongId)
+      },
+      error: function(err){
+        alert("Error deleting song")
+      }
+    })
+  }
+
+
 
   function getPlaybackSettings(id){
     jsRoutes.controllers.JSONmaster.getPlaybackSettings(id).ajax({
@@ -158,6 +188,7 @@ $(document).ready(function(){
 
 
   function saveSong(){
+
     var title = $("#title").val()
     var composer = $("#composer").val()
     var dateCreated = $("#dateCreated").val()
@@ -179,7 +210,7 @@ $(document).ready(function(){
       destinationKey: destinationKey,
       transposeOn: transposeOn,
       romanNumeral: romanNumeral,
-      userId: GUEST_USER_ID};
+      userId: userId};
 
     song = newSong
 
@@ -192,6 +223,8 @@ $(document).ready(function(){
       success: function(data){
         updateSongFieldDisplay()
         printFormattedText(song)
+        //Change text of dropdown
+        $("#songDropdown option:selected").text(title)
       },
       error: function(){
       },

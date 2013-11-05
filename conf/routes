@@ -22,6 +22,8 @@ GET		/js/getSong					controllers.JSONmaster.getSong(id: Int)
 GET		/js/getSongs				controllers.JSONmaster.getSongs(userId: Int)
 PUT 	/js/saveSong 				controllers.JSONmaster.saveSong
 PUT		/js/newSong					controllers.JSONmaster.newSong(userId: Int)
+PUT		/js/deleteSong				controllers.JSONmaster.deleteSong(songId: Int)
+
 
 GET		/js/getPlaybackSettings		controllers.JSONmaster.getPlaybackSettings(songId: Int)
 PUT		/js/savePlaybackSettings	controllers.JSONmaster.savePlaybackSettings

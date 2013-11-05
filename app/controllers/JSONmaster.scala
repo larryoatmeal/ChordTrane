@@ -44,6 +44,12 @@ object JSONmaster extends Controller with JSONconversions{
     Ok(id.toString)
   }
 
+  def deleteSong(songId: Int) = Action{
+    implicit request => 
+    Song.deleteSong(songId)
+    Ok(s"Deleted $songId")
+  }
+
   def getPlaybackSettings(songId: Int) = Action{
 		implicit request =>
 		Ok(Json.toJson(PlaybackSettings.getPlaybackSettings(songId)))
