@@ -31,5 +31,9 @@ Export to MusicXML
 -With click of a button, ChordTrane will create a MusicXML from your chord text
 -Open up MusicXML in your notation software
 
-Playback (to be implemented)
+Playback
+-Click "Generate Music"
+-Generate .mid (MIDI) playback
+-Eachtime you generate -> different playback.
+-Play in music players, open in music sequences, open in music notation programs
 
