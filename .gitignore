@@ -1,8 +1,8 @@
 logs
 project/project
 project/target
-public/MusicXML/*.mid
-public/MidiOutput/*.xml
+public/MidiOutput/*.mid
+public/MusicXML/*.xml
 target
 tmp
 .history
