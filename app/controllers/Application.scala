@@ -42,7 +42,9 @@ object Application extends Controller with Secured{
         JSONmaster.download,
         JSONmaster.playback,
         JSONmaster.newSong,
-        JSONmaster.deleteSong
+        JSONmaster.deleteSong,
+        JSONmaster.midiAsBase64,
+        JSONmaster.midiString64
       )
     ).as("text/javascript") 
   }

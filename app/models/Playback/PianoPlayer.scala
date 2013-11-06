@@ -15,7 +15,7 @@ object PianoPlayer{
 	val JAZZ_BALLAD4 = 1
 
 	
-	val DefaultPianoSettings = PianoSettings(Note.getMidiNote("G", 2), Note.getMidiNote("C", 5), 1.0, 5.0)
+	val DefaultPianoSettings = PianoSettings(Note.getMidiNote("G", 2), Note.getMidiNote("C", 5), 5.0, 1.0)
 
 	def getCompingMidi(chordTemplate: Array[ComperTemplate], style: Int, numberOfMeasures: Int, PianoSettings: PianoSettings = DefaultPianoSettings) = {
 
@@ -35,23 +35,25 @@ object PianoPlayer{
 		val filledInChordTemplate2  = (0 until filledInChordTemplate.size).map{
 			index => {
 				val currentChord = filledInChordTemplate(index)
+				val currentTick = currentChord.tick					
 
 
 				if(index == filledInChordTemplate.size - 1){
-					filledInChordTemplate(index)
+					currentChord
 				}else{
-					val currentChord = filledInChordTemplate(index)
-					val nextChord = filledInChordTemplate(index + 1)
-					val currentTick = currentChord.tick					
-					val nextTick = nextChord.tick
-					if(currentTick % 2 == 1 && nextTick == currentTick + 1){//if on offbeat and there is a chord immediately after 
-						ComperTemplate(nextChord.chordGenerator, currentTick)
+
+					//if on offbeat AND if there is a chord symbol on the downbeat after the offbeat
+					if (currentTick % 2 ==1 && chordTemplate.exists(_.tick == currentTick+1)){
+						val desiredChord = chordTemplate.find(_.tick == currentTick+1).get //must exist, since passed if
+						ComperTemplate(desiredChord.chordGenerator, currentTick)				
 					}else{
 						currentChord
+
 					}
+
 				}
 			}
-		}		
+		}.toArray		
 
 		def loop(remaining: Array[ComperTemplate], out: Array[MidiChord]): Array[MidiChord] = {
 			if(remaining.isEmpty){
@@ -64,8 +66,8 @@ object PianoPlayer{
 			}
 		}
 
-		val startingChord = MidiChord(firstChord(filledInChordTemplate.head.chordGenerator), filledInChordTemplate.head.tick)
-		val chordArray = loop(filledInChordTemplate.tail, Array(startingChord)).reverse
+		val startingChord = MidiChord(firstChord(filledInChordTemplate2.head.chordGenerator), filledInChordTemplate2.head.tick)
+		val chordArray = loop(filledInChordTemplate2.tail, Array(startingChord)).reverse
 
 		if(style == JAZZ_SWING4){
 			swing(chordArray)

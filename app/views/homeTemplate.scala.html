@@ -34,6 +34,10 @@
             {
                 height:120px; float:left; margin:15px
             }
+            #midiplayer 
+            {
+                background-color: #eee;
+            }
             .modal .modal-dialog {
             /* new custom width */
             width: 70%;
@@ -70,6 +74,17 @@
             <a class="btn btn-success" id="save">Save <span class="glyphicon glyphicon-floppy-disk"></span></span></a>
             <a class="btn btn-default" id="new">New</a>
             <a class="btn btn-primary"id="generateMusic"><span class="glyphicon glyphicon-music"></span> Generate Music</a>
+
+            <a class ="btn btn-info" id ="downloadMIDI" style="display:none;"><span class="glyphicon glyphicon-download"></span> Download Midi</a>
+
+            <object id="midiplayer" type="audio/mid" data="midifile.mid" width="240" height="45" style="display:none;vertical-align: middle" BGCOLOR="#eeeeee" autohref="true">
+            <!-- Autohref prevents clipping sound -->
+              <param name="src" value="midifile.mid"/>
+              <param name="autoplay" value="false"/>
+              <param name="autoStart" value="0"/>
+              <div class="alert alert-warning" style="font-size:20px">Your browser does not support embedded midi. Press "Download MIDI" to download the midi file to your computer. Your computer will likely have a music player capable of playing midi files, such as QuickTime or Windows Media Player. If not, try <a href="http://solmire.com/">solmire.com</a> which lets you convert midi files to mp3.</div>
+            </object>
+
 
             </h1>
 
@@ -255,9 +270,19 @@ Chords
 
 <h4><b>Playback</b></h4>
 -Click "Generate Music"
--Generate .mid (MIDI) playback
+-If your browser supports MIDI playback within the browser
+  -A playback bar will be shown
+  -If you want to download the MIDI file, press "Download MIDI"
+  -You can open the MIDI file not only in music players, but music sequencers, and
+   music notation programs
+-If your browser does not support MIDI playback
+  -Download the MIDI file.
+  -Quicktime and Windows Media Player, as well as many other music players, can
+   play midi files
+  -If that doesn't work, try <a href = "http://www.solmire.com">solmire.com</a> which
+   lets you upload midi files and convert them into mp3s. 
 -Eachtime you generate -> different playback.
--Play in music players, open in music sequences, open in music notation programs
+-Click "Generate Music" again if you want a new rendition or if you change songs
 
 <h4><b>Tranpose</b></h4>
 -Transpose to any key or create Roman Numeral chords
@@ -316,9 +341,30 @@ Special thanks to spidaman
 
 
 
-
+    <iframe id="frame" style="display:none"></iframe>
+    <!-- For downloading -->
 
     </body>
 
     <script src="@routes.Assets.at("javascripts/home.js")" type="text/javascript"></script>
+
+    <script src="@routes.Assets.at("javascripts/MidiJs/MIDI/AudioDetect.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/MidiJs/MIDI/LoadPlugin.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/MidiJs/MIDI/Plugin.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/MidiJs/MIDI/Player.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/MidiJs/Widgets/Loader.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/MidiJs/Window/DOMLoader.XMLHttp.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/MidiJs/Window/DOMLoader.script.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/MidiJs/Window/DOMLoader.script.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/MidiJs/inc/Base64.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/MidiJs/inc/base64binary.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/MidiJs/inc/jasmid/stream.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/MidiJs/inc/jasmid/midifile.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/MidiJs/inc/jasmid/replayer.js")" type="text/javascript"></script>
+
+
+
+
+
+
 }

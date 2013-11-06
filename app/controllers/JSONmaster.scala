@@ -88,9 +88,30 @@ object JSONmaster extends Controller with JSONconversions{
     Ok(path)
   }
 
+  def midiAsBase64(path: String) = Action{
+    implicit request =>
+    import org.apache.commons.codec.binary.Base64
+    import org.apache.commons.io.FileUtils.readFileToByteArray
+    import java.io.File
 
+    val file = new File(path)
+    val bytes = readFileToByteArray(file)
+    val encoded = Base64.encodeBase64(bytes)
 
+    val encodedString = new String(encoded)
 
+    def Midi64Coded(string: String) = {
+      "data:audio/midi;base64," + string
+    }
+
+    Ok(Midi64Coded(encodedString))
+  }
+
+  def midiString64(path: String) = Action{
+    implicit request => 
+    
+    Ok("Midi string")
+  }
 
 
 

@@ -32,7 +32,11 @@ PUT 	/js/formatText				controllers.JSONmaster.formatText
 
 PUT 	/js/exportMusicXML			controllers.JSONmaster.exportMusicXML
 PUT 	/js/playback				controllers.JSONmaster.playback
+GET 	/js/midiAsBase64 			controllers.JSONmaster.midiAsBase64(path: String)
+GET 	/js/midiString64 			controllers.JSONmaster.midiString64(path: String)
+
 GET 	/js/download				controllers.JSONmaster.download(path: String)
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/javascripts/routes  controllers.Application.javascriptRoutes

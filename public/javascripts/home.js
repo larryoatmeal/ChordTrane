@@ -44,7 +44,13 @@ $(document).ready(function(){
 
   var songList
 
+  //MIDI
+  var player
+
+  var midipath
+
   initialize()
+  //initializeMidiJs()
 
   function initialize(){
     userIdPrecursor = toInt($("#userId").attr("data"))
@@ -282,8 +288,16 @@ $(document).ready(function(){
     {
       success: function(data){
         //data is the path returned
+        loadMidiString(data)
+
+        
+
         var url = jsRoutes.controllers.JSONmaster.download(data).url
-        location.href= url
+        midipath = url
+
+        openMusicPlayer(url)
+
+
 
       },
       error: function(){
@@ -293,6 +307,63 @@ $(document).ready(function(){
     }
     )
   })
+
+  function downloadMidi(){
+    var ifrm = document.getElementById("frame")
+    ifrm.src = midipath
+  }
+
+  $("#downloadMIDI").on("click", function(){downloadMidi()})
+
+  function openMusicPlayer(path){
+    $("#midiplayer").hide()
+    $("#downloadMIDI").hide()
+    $("#midiplayer").attr("data", path)
+
+    //wait a second to prevent clipping
+    $("#midiplayer").show()
+    $("#downloadMIDI").show()
+  }
+
+  function loadMidiString(path){
+
+    var url = jsRoutes.controllers.JSONmaster.midiAsBase64(path).url
+
+    $.get(url, function(data){
+      console.log(data)
+
+      //player.loadFile(data, player.start)
+
+
+
+    })
+    // $.ajax({
+    //   type:'GET',
+    //   url: url,
+    //   data: {},
+    //   success: function(data) {
+    //    console.log(data); 
+    //   }, error: function(err) {
+    //    console.log("Error"); 
+    //   }
+    // });
+
+  }
+
+
+
+
+  function initializeMidiJs(){
+    MIDI.loadPlugin({
+      soundfontUrl: "/assets/soundfonts/",
+      instruments: ["acoustic_grand_piano", "acoustic_bass", "synth_drum"],
+      callback: function(){
+        player = MIDI.Player
+        player.timeWarp = 1
+      }
+    })
+  }
+
 
 
   function getSongs(loadFunction){

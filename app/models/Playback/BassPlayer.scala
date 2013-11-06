@@ -21,6 +21,8 @@ object BassPlayer{
 	def getBass(chordTemplate: Array[ComperTemplate]) = {
 		val skeleton = bassSkeleton(chordTemplate)
 
+		println(Note.printNotes(skeleton.map(_.note)))
+		
 		val notesWithChords = skeleton zip chordTemplate.map(_.chordGenerator)
 		
 		def loop(current: Tuple2[SingleNote, ChordGenerator], queue: Array[Tuple2[SingleNote, ChordGenerator]], out: Array[SingleNote]): Array[SingleNote] = {
@@ -38,6 +40,7 @@ object BassPlayer{
 		}
 
 		loop(notesWithChords.head, notesWithChords.tail, Array())
+		
 	}
 	
 
@@ -68,7 +71,7 @@ object BassPlayer{
 
 		val firstNote = SingleNote(initialNote(firstChord.chordGenerator.rootMidi), firstChord.tick)
 		
-		loop(chordTemplate, Array[SingleNote](firstNote))
+		loop(chordTemplate.tail, Array[SingleNote](firstNote))
 	}
 
 	def initialNote(note: Int) = {//Get first note
@@ -142,7 +145,7 @@ object BassPlayer{
 
 			SingleNote(noteInBetween, destination.tick - 2)
 
-		}else{//Diatonic
+		}else{//Whole step
 			val noteInBetween  = if(Helper.rollDice(0.5)){
 				destination.note - 2 //approach from below
 			}else{
@@ -173,8 +176,18 @@ object BassPlayer{
 
 				Array(firstNote, secondNote)
 			}
-			case 3 => {	
-				val chordTones = Note.chordTonesInBetweenInclusive(begin.note, end.note, chordGenerator.chordTones)
+			case 3 => {
+				//Let's say going from D3 to G3
+				//Separation is small, so let chord tones possible be between D3 and D4
+				val chordTones = if(end.note == begin.note){//if destination higher than beginning
+					Note.chordTonesInBetweenInclusive(begin.note - 12, begin.note + 12, chordGenerator.chordTones)
+				}else if(end.note > begin.note){
+					Note.chordTonesInBetweenInclusive(begin.note, begin.note + 12, chordGenerator.chordTones)
+				}else{
+					Note.chordTonesInBetweenInclusive(begin.note, begin.note - 12, chordGenerator.chordTones)
+				}
+
+				// val chordTones = Note.chordTonesInBetweenInclusive(begin.note, end.note, chordGenerator.chordTones)
 
 				val secondPitch = Helper.getRandomFromArray[Int](chordTones)
 

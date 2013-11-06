@@ -8,6 +8,8 @@ abstract class ChordGenerator(rootName: String){
   override def toString = rootName
   val rootMidi = Note.midify(rootName)
   def chordTones: Array[Int]
+
+  //val scale
 } 
 
 

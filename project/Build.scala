@@ -11,7 +11,9 @@ object ApplicationBuild extends Build {
     jdbc,
     anorm,
     "org.scalaz" % "scalaz-core_2.10" % "7.0.3",
-    "mysql" % "mysql-connector-java" % "5.1.18"
+    "mysql" % "mysql-connector-java" % "5.1.18",
+    "commons-codec" % "commons-codec" % "1.4",
+    "commons-io" % "commons-io" % "2.4"
     )
 
 
