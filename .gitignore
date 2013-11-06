@@ -2,7 +2,9 @@ logs
 project/project
 project/target
 public/MidiOutput/*.mid
+public/MidiOutput/*.xml
 public/MusicXML/*.xml
+public/MusicXML/*.mid
 target
 tmp
 .history
