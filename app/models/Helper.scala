@@ -52,8 +52,9 @@ object Helper{
 
 	def powerProbabilityCurve(center: Int, deviation: Int, power: Double) = {
 		//Generate power function such that y = 0 at mean, y = 1 at deviations
+		//Probability is probability needed to octave shift
+		//Greater the power, less in tessitura
 		//center + deviation = max, center - deviation = min
-		//Higher power, less steep curve
 
 		//y = 1/deviation^power * (x-center)^power
 		//if 

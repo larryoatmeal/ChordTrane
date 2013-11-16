@@ -68,6 +68,12 @@ trait JSONconversions{
 			"id" -> Json.toJson(l.id)
 		) 
   }
+  implicit object SuperSongWrites extends Writes[SuperSong] {
+  	def writes(s: SuperSong) = Json.obj(
+  		"song" -> Json.toJson(s.song),
+  		"playbackSettings" -> Json.toJson(s.playbackSettings)
+  	)
+  }
   
   //JSon to object
   implicit val SongReads: Reads[Song] = (
@@ -113,4 +119,8 @@ trait JSONconversions{
     (JsPath \ "label").read[String] and
 		(JsPath \ "id").read[Int]
   )(LabelAndId.apply _)
+  implicit val SuperSongReads: Reads[SuperSong] = (
+    (JsPath \ "song").read[Song] and
+		(JsPath \ "playbackSettings").read[PlaybackSettings]
+  )(SuperSong.apply _)
 }

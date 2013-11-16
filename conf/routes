@@ -20,6 +20,8 @@ GET 	/logout						controllers.Authentication.logout
 
 GET		/js/getSong					controllers.JSONmaster.getSong(id: Int)
 GET		/js/getSongs				controllers.JSONmaster.getSongs(userId: Int)
+GET		/js/getSongsFull			controllers.JSONmaster.getSongsFull(userId: Int)
+
 PUT 	/js/saveSong 				controllers.JSONmaster.saveSong
 PUT		/js/newSong					controllers.JSONmaster.newSong(userId: Int)
 PUT		/js/deleteSong				controllers.JSONmaster.deleteSong(songId: Int)
@@ -32,6 +34,8 @@ PUT 	/js/formatText				controllers.JSONmaster.formatText
 
 PUT 	/js/exportMusicXML			controllers.JSONmaster.exportMusicXML
 PUT 	/js/playback				controllers.JSONmaster.playback
+PUT 	/js/playbackGuestAccount	controllers.JSONmaster.playbackGuestAccount
+
 GET 	/js/midiAsBase64 			controllers.JSONmaster.midiAsBase64(path: String)
 GET 	/js/midiString64 			controllers.JSONmaster.midiString64(path: String)
 

@@ -24,31 +24,43 @@ object RhythmSectionCoordinator{
 
 	val dummyMeasures = Helper.measuresOnly(Master.parseSong(Master.DummySong))
 
-	val dummyRhythmSection = new RhythmSectionCoordinator(dummyMeasures, 4, 2, PianoPlayer.JAZZ_SWING4)
+	//val dummyRhythmSection = new RhythmSectionCoordinator(dummyMeasures, 4, 2, PianoPlayer.JAZZ_SWING4)
 
 	
 
 
 }
 
-class RhythmSectionCoordinator(measures: List[Measure], timeSig: Int, subdivisions: Int, style: Int){
+class RhythmSectionCoordinator(measures: List[Measure], timeSig: Int, subdivisions: Int, style: Int, pianoSettings: PianoSettings, bassSettings: BassSettings, bpm: Int, repeats:Int){
 
-	val chordTemplate = RhythmSectionCoordinator.generateChordTemplate(measures, timeSig, subdivisions)
+	def repeat(measures: List[Measure]) = {
+		if(repeats < 2) measures
+		else{
+			(1 until repeats).foldLeft(measures){
+				(acc, repeatNumber) => {
+					acc ::: measures 
+				}
+			}
+		}
+	}
 
-	def piano = PianoPlayer.getCompingMidi(chordTemplate, style, measures.length)
+	val chordTemplate = RhythmSectionCoordinator.generateChordTemplate(repeat(measures), timeSig, subdivisions)
 
-	def bass = BassPlayer.getBass(chordTemplate)
+	def piano = PianoPlayer.getCompingMidi(chordTemplate, style, measures.length * repeats, pianoSettings)
 
-	def drums = Drums.SwingDrumBasic(measures.length)
+	def bass = BassPlayer.getBass(chordTemplate, bassSettings)
+
+	def drums = Drums.SwingDrumBasic(measures.length * repeats)
 
 	def midi(path: String){
 		val master = new MidiCreator
 		
+		val tempoEvent = MidiCreator.tempoEvent(bpm)
 
 
 		//Piano
-		val pianoMidiData = MidiCreator.PianoProgram(MidiCreator.PianoChannel) +: MidiCreator.midiChordsToMidiEvent(piano, 3, MidiCreator.PianoChannel) //piano triplet feel. Resolve later
-		master.createTrack(pianoMidiData)
+		val pianoMidiData = (MidiCreator.PianoProgram(MidiCreator.PianoChannel) +: MidiCreator.midiChordsToMidiEvent(piano, 3, MidiCreator.PianoChannel)) //piano triplet feel. Resolve later
+		master.createTrack(tempoEvent +: pianoMidiData)
 
 		//Bass 
 		val bassMidiData = MidiCreator.BassProgram(MidiCreator.BassChannel) +: MidiCreator.singleNotesToMidiEvent(bass, subdivisions, MidiCreator.BassChannel) 
@@ -60,12 +72,6 @@ class RhythmSectionCoordinator(measures: List[Measure], timeSig: Int, subdivisio
 
 		master.createMidi(path)
 	}
-
-
-
-
-
-
 
 
 }

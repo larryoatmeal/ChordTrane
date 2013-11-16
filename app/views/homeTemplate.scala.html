@@ -1,4 +1,4 @@
-@(title: String)(loginStatus: Html)
+@(title: String)(loginStatus: Html)(message: Html)
 
 
 @template(title){
@@ -13,7 +13,7 @@
             {
               font-family:"Courier New", monospace;
               font-weight: bold;
-              font-size: 1.1em;
+              font-size: 15px;
             }
             #playbackPanel
             {
@@ -37,6 +37,13 @@
             #midiplayer 
             {
                 background-color: #eee;
+            }
+            #FontTest
+            {
+                position: absolute;
+                visibility: hidden;
+                height: auto;
+                width: auto;
             }
             .modal .modal-dialog {
             /* new custom width */
@@ -68,6 +75,7 @@
             </div><!--/.nav-collapse -->
           </div>
         </div>
+
 
         <div class="row">
             <h1><select id="songDropdown"></select> 
@@ -142,6 +150,9 @@
 
 
             <div class="col-md-12" id="toolsPanel">
+
+                @message
+
                 <h3>Settings</h3>
                  <form role="form">
                     <div class="form-group">
@@ -154,6 +165,8 @@
                           <option value="6">6</option>
                         </select>
                     </div>
+
+
 
 
                     <div class="form-group">
@@ -199,11 +212,29 @@
                         <input type="checkbox" id="romanNumeral">
                     </div>
 
+                    <fieldset class="form-inline">
+                      <a class="btn btn-default" id = "playbackSettings" data-toggle="modal" data-target="#playbackSettingsModal" style="vertical-align: middle"><span class="glyphicon glyphicon-cog"></span> Playback Algorithm Settings
+                          </a>
+                          <label for="bpm" >Tempo (BPM)</label>
+                          <input type="text" class="input-mini" id="bpm" >
+                          <label for="repeats">Repeats</label>
+                          <input type="text" class="input-mini" id="repeats">
+                          
+                      </fieldset>
+
+                      <br>
+
+
                     <!-- <a class="btn btn-info" id="exportText"><span class="glyphicon glyphicon-download" ></span> Export Text</a> -->
                     <a class="btn btn-info" id="exportMusicXML"><span class="glyphicon glyphicon-download"></span> Export MusicXML</a>
 
                     <br>
                     <br>
+
+              
+
+
+
 
                     <div class="form-group">
                         <label for="title" >Title</label>
@@ -217,7 +248,7 @@
                         <label for="dateCreated" >Date</label>
                         <input type="text" class="form-control" id="dateCreated">
                     </div>
-                    
+
                     
                    
                 </form>
@@ -341,26 +372,81 @@ Special thanks to spidaman
 
 
 
-    <iframe id="frame" style="display:none"></iframe>
+        <div class="modal fade" id="playbackSettingsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Playback Algorithm Settings</h4>
+              </div>
+              <div class="modal-body">
+
+                    <h2 class="text-success">Piano Settings</h2>
+
+                    <div class="form-group">
+                        <label for="title" >Min (0 - 127)</label>
+                        <input type="text" class="form-control" id="pianoMin">
+                    </div>
+                    <div class="form-group">
+                        <label for="composer" >Max (0 - 127)</label>
+                        <input type="text" class="form-control" id="pianoMax">
+                    </div>
+                    <div class="form-group">
+                        <label for="dateCreated" >Tessitura (Decimal > 0, up to 10)</label>
+                        <input type="text" class="form-control" id="pianoStayInTessitura">
+                    </div>
+                    <div class="form-group">
+                        <label for="dateCreated" >Connectivity (Decimal > 0, up to 10)</label>
+                        <input type="text" class="form-control" id="pianoConnectivity">
+                    </div>
+
+
+                    <h2 class="text-success">Bass Settings</h2>
+
+                    <div class="form-group">
+                        <label for="title" >Min (0 - 127)</label>
+                        <input type="text" class="form-control" id="bassMin">
+                    </div>
+                    <div class="form-group">
+                        <label for="composer" >Max (0 - 127)</label>
+                        <input type="text" class="form-control" id="bassMax">
+                    </div>
+                    <div class="form-group">
+                        <label for="dateCreated" >Tessitura (Decimal > 0, up to 10)</label>
+                        <input type="text" class="form-control" id="bassStayInTessitura">
+                    </div>
+                    <div class="form-group" style="display:none"> 
+                    <!-- NOT ACTUALLY IMPLENTED YET, SO HIDE -->
+                        <label for="dateCreated" >Connectivity (Decimal > 0, up to 10)</label>
+                        <input type="text" class="form-control" id="bassConnectivity" value ="1.0">
+                    </div>
+
+                    <h2 class="text-info">Info</h2>
+                    <ul>
+                    <li>Min: The lowest note allowed. 60 corresponds to C4. <a href = "http://www.phys.unsw.edu.au/jw/notes.html" target="_blank">Midi Values to Notes</a></li>
+                    <li>Max: The highest note allowed</li>
+                    <li>Tessitura: How much of the given range should be used? Higher tessitura values mean more of the range of the instrument will be expressed. Lower tessitura values mean the instrument will tend to stay near the center of its range</li>
+                    <li>Connectivity: The closeness of piano voicings. Greater connectivity means piano voicings will be closer together</li>
+                    </ul>
+        
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+
+
+    <!-- <iframe id="frame" style="display:none"></iframe> -->
     <!-- For downloading -->
+
+    <div id = "FontTest"></div>
 
     </body>
 
-    <script src="@routes.Assets.at("javascripts/home.js")" type="text/javascript"></script>
 
-    <script src="@routes.Assets.at("javascripts/MidiJs/MIDI/AudioDetect.js")" type="text/javascript"></script>
-    <script src="@routes.Assets.at("javascripts/MidiJs/MIDI/LoadPlugin.js")" type="text/javascript"></script>
-    <script src="@routes.Assets.at("javascripts/MidiJs/MIDI/Plugin.js")" type="text/javascript"></script>
-    <script src="@routes.Assets.at("javascripts/MidiJs/MIDI/Player.js")" type="text/javascript"></script>
-    <script src="@routes.Assets.at("javascripts/MidiJs/Widgets/Loader.js")" type="text/javascript"></script>
-    <script src="@routes.Assets.at("javascripts/MidiJs/Window/DOMLoader.XMLHttp.js")" type="text/javascript"></script>
-    <script src="@routes.Assets.at("javascripts/MidiJs/Window/DOMLoader.script.js")" type="text/javascript"></script>
-    <script src="@routes.Assets.at("javascripts/MidiJs/Window/DOMLoader.script.js")" type="text/javascript"></script>
-    <script src="@routes.Assets.at("javascripts/MidiJs/inc/Base64.js")" type="text/javascript"></script>
-    <script src="@routes.Assets.at("javascripts/MidiJs/inc/base64binary.js")" type="text/javascript"></script>
-    <script src="@routes.Assets.at("javascripts/MidiJs/inc/jasmid/stream.js")" type="text/javascript"></script>
-    <script src="@routes.Assets.at("javascripts/MidiJs/inc/jasmid/midifile.js")" type="text/javascript"></script>
-    <script src="@routes.Assets.at("javascripts/MidiJs/inc/jasmid/replayer.js")" type="text/javascript"></script>
 
 
 

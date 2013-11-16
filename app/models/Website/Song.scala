@@ -8,13 +8,15 @@ import play.api.db.DB
 import play.api.Logger
 
 
+case class SuperSong(song: Song, playbackSettings: PlaybackSettings)
+
 case class Song(id: Int, rawText: String, title: String, composer: String, 
 	dateCreated: String, timeSig: Int, currentKey: String, destinationKey: String, transposeOn: Boolean, romanNumeral: Boolean, userId: Int)
 
 object Song extends DatabaseObject{
 
   //when new song created
-  val BlankSong = Song(-1, "", "New Song", "Title", "Composer", 4, "C", "C", false, false, -1)
+  val BlankSong = Song(-1, "|C|", "New Song", "Title", "Composer", 4, "C", "C", false, false, -1)
 
 
   val songParser: RowParser[Song] = {
@@ -37,6 +39,8 @@ object Song extends DatabaseObject{
 
   def getSong(id: Int) = getSingleWithID[Song](songParser, id, "id", "songs")
   def getSongsByUser(userId: Int) = getAllOfID[Song](songParser, userId, "userId", "songs").map(song => LabelAndId(song.title, song.id))
+  def getSongsByUserFull(userId: Int) = getAllOfID[Song](songParser, userId, "userId", "songs")
+
 
   def updateSong(song: Song) = DB.withConnection{
     implicit connection=>
@@ -87,9 +91,29 @@ object Song extends DatabaseObject{
     path
   }
 
+
+  def playbackGuestAccount(superSong: SuperSong) = {
+    val path = s"public/MusicXML/${superSong.song.title}.mid"
+    val playbackSettings = PlaybackSettings.getPlaybackSettings(superSong.song.id)
+
+
+    models.Master.playback(songConversion(superSong.song), path, 
+      superSong.playbackSettings.pianoSettings, 
+      superSong.playbackSettings.bassSettings,
+      superSong.playbackSettings.bpm,
+      superSong.playbackSettings.repeats)
+    path
+  }
+
   def playback(song: Song) = {
     val path = s"public/MusicXML/${song.title}.mid"
-    models.Master.playback(songConversion(song), path)
+    val playbackSettings = PlaybackSettings.getPlaybackSettings(song.id)
+
+    models.Master.playback(songConversion(song), path, 
+      playbackSettings.pianoSettings, 
+      playbackSettings.bassSettings,
+      playbackSettings.bpm,
+      playbackSettings.repeats)
     path
   }
 
@@ -124,6 +148,9 @@ object Song extends DatabaseObject{
       """).on(
         "songId" -> songId
       ).executeUpdate()
+
+    //delete playback settings as well
+    PlaybackSettings.deletePlaybackSettings(songId)
   }
 
 

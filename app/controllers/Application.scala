@@ -34,6 +34,7 @@ object Application extends Controller with Secured{
       Routes.javascriptRouter("jsRoutes")(
         JSONmaster.getSong,
         JSONmaster.getSongs,
+        JSONmaster.getSongsFull,
         JSONmaster.saveSong,
         JSONmaster.getPlaybackSettings,
         JSONmaster.savePlaybackSettings,
@@ -44,7 +45,8 @@ object Application extends Controller with Secured{
         JSONmaster.newSong,
         JSONmaster.deleteSong,
         JSONmaster.midiAsBase64,
-        JSONmaster.midiString64
+        JSONmaster.midiString64,
+        JSONmaster.playbackGuestAccount
       )
     ).as("text/javascript") 
   }

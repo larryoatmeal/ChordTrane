@@ -17,7 +17,6 @@ case class PlaybackSettings(songId: Int, bpm: Int, repeats: Int, pianoSettings: 
 
 object PlaybackSettings extends DatabaseObject{
 
-
   val DefaultPlaybackSettings = PlaybackSettings(-1, 120, 3, PianoPlayer.DefaultPianoSettings, BassPlayer.DefaultBassSettings)
 
   val playbackSettingsParser: RowParser[PlaybackSettings] = {
@@ -105,6 +104,15 @@ object PlaybackSettings extends DatabaseObject{
     "bassStayInTessitura" -> DefaultPlaybackSettings.bassSettings.stayInTessitura,
     "bassConnectivity" -> DefaultPlaybackSettings.bassSettings.connectivity
    ).executeUpdate()
+  }
+
+  def deletePlaybackSettings(songId: Int) = DB.withConnection{
+    implicit connection =>
+    SQL("""
+      DELETE FROM playbackSettings WHERE songId = {songId}
+      """).on(
+        "songId" -> songId
+      ).executeUpdate()
   }
 
 

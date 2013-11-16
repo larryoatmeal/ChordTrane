@@ -4,7 +4,8 @@ import models.ChordGenerator._
 
 case class MidiChord(chord: Array[Int], tick: Int)
 case class PianoSettings(lower: Int, upper: Int, stayInTessitura: Double, connectivity: Double)
-
+//Greater stayInTessitura, less in tessitura. Opposite definition, that's awkward
+//Greater connectivity, closer chord voicings
 
 
 
@@ -17,7 +18,7 @@ object PianoPlayer{
 	
 	val DefaultPianoSettings = PianoSettings(Note.getMidiNote("G", 2), Note.getMidiNote("C", 5), 5.0, 1.0)
 
-	def getCompingMidi(chordTemplate: Array[ComperTemplate], style: Int, numberOfMeasures: Int, PianoSettings: PianoSettings = DefaultPianoSettings) = {
+	def getCompingMidi(chordTemplate: Array[ComperTemplate], style: Int, numberOfMeasures: Int, pianoSettings: PianoSettings) = {
 
 		val compingPattern = style match {
 			case JAZZ_SWING4 => JazzSwing.generateRhythmTrack(numberOfMeasures)
@@ -60,13 +61,13 @@ object PianoPlayer{
 				out
 			}
 			else{
-				val nextChord = getNextChord(out.head.chord, remaining.head.chordGenerator, PianoSettings)
+				val nextChord = getNextChord(out.head.chord, remaining.head.chordGenerator, pianoSettings)
 				val newChord = MidiChord(nextChord, remaining.head.tick)
 				loop(remaining.tail, newChord +: out)
 			}
 		}
 
-		val startingChord = MidiChord(firstChord(filledInChordTemplate2.head.chordGenerator), filledInChordTemplate2.head.tick)
+		val startingChord = MidiChord(firstChord(filledInChordTemplate2.head.chordGenerator, pianoSettings), filledInChordTemplate2.head.tick)
 		val chordArray = loop(filledInChordTemplate2.tail, Array(startingChord)).reverse
 
 		if(style == JAZZ_SWING4){
@@ -123,6 +124,11 @@ object PianoPlayer{
 					def shiftRangeProbability = Helper.powerProbabilityCurve(center, deviation, PianoSettings.stayInTessitura)
 					val lowestNoteOfChord = chord.head
 					val shiftProbability = shiftRangeProbability(lowestNoteOfChord)
+
+					println(PianoSettings.lower + "$" + PianoSettings.upper)
+
+
+					println(s"$lowestNoteOfChord: Probability -> $shiftProbability")
 					Helper.rollDice(shiftProbability)
 				}
 
@@ -159,7 +165,7 @@ object PianoPlayer{
 	}
 
 
-	def firstChord(chordType: ChordGenerator, PianoSettings: PianoSettings = DefaultPianoSettings) = {
+	def firstChord(chordType: ChordGenerator, PianoSettings: PianoSettings) = {
 		chordType match {
 			case s: SeventhGenerator => {
 				val chord = Helper.getRandomFromArray[Array[Int]](s.drop2s)

@@ -28,6 +28,10 @@ object JSONmaster extends Controller with JSONconversions{
 		implicit request =>
 		Ok(Json.toJson(Song.getSongsByUser(userId)))
 	}
+  def getSongsFull(userId: Int) = Action{
+    implicit request =>
+    Ok(Json.toJson(Song.getSongsByUserFull(userId)))
+  }
 
 
   def saveSong = getJson{
@@ -63,6 +67,7 @@ object JSONmaster extends Controller with JSONconversions{
     Ok("Succesfully saved PlaybackSettings")
   }
 
+
   def formatText = getJson{
     json =>
     val song = json.as[Song]
@@ -85,6 +90,13 @@ object JSONmaster extends Controller with JSONconversions{
     json =>
     val song = json.as[Song]
     val path = Song.playback(song)
+    Ok(path)
+  }
+
+  def playbackGuestAccount = getJson{
+    json =>
+    val superSong = json.as[SuperSong]
+    val path = Song.playbackGuestAccount(superSong)
     Ok(path)
   }
 

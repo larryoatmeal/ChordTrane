@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	// $( "#eq > span" ).each(function() {
+  // $( "#eq > span" ).each(function() {
  //      // read initial vals from markup and remove that
  //      var val = toInt( $( this ).text());
  //      $( this ).empty().slider({
@@ -9,25 +9,16 @@ $(document).ready(function(){
  //        orientation: "vertical"
  //      });
  //    });
-  
-  var GUEST_USER_ID = 1
-  var userIdPrecursor 
-  var userId
 
-  //Song
-  var song 
-  //part of song
-  // var title
-  // var composer
-  // var dateCreated
-  // var currentKey
-  // var destinationKey
-  // var transposeOn
-  // var romanNumeral
-  // var rawText
+  var GUEST_USER_ID = 1
+  var songIndex = 0 //PlaybackSettingsList array must remain lockstep with song. Indexes will match up
+  var songs
+  var song //current song
+
 
   //Playback Settings
-  var playbackSettings
+  var playbackSettingsList = []
+  var playbackSettings //current settings
   // var bpm
   // var repeats
   // var pianoMin
@@ -39,53 +30,52 @@ $(document).ready(function(){
   // var bassStayInTessitura
   // var bassConnectivity
 
-  var songList//label and id
-
   //MIDI
-  var player
+  var player 
 
   var midipath
-
   var charactersInLongestLine
   var renderedText
+
 
   initialize()
   //initializeMidiJs()
 
   function initialize(){
-    userIdPrecursor = toInt($("#userId").attr("data"))
-    userId = function(){if(isNaN(userIdPrecursor)){return GUEST_USER_ID}else{return userIdPrecursor}}()
-
-    getSongs(function(){
-      var firstSongId = toInt($("#songDropdown").first().val())
-      getSong(firstSongId)
-    })
+    getSongs(loadSong)
+    //songIndex starts at 0
   }
-
+  
   // SONG CRUD ------------------------------------------------------------------------------
-  function getSong(id){
-    jsRoutes.controllers.JSONmaster.getSong(id).ajax({
-      success: function(data){
-        song = data
-        console.log(song)
 
-        loadSong()
-      },
-      error: function(err){
-        alert("Error opening song")
-      }
-    })
-  }
 
-  function getSongs(loadFunction){
-    //if no user (on guest account)
-    jsRoutes.controllers.JSONmaster.getSongs(userId).ajax(
+  function getSongs(loadFunction){//This function fired only once. All songs are stored in javascript memory
+    jsRoutes.controllers.JSONmaster.getSongsFull(GUEST_USER_ID).ajax(
       {
         success: function(data){
-          songList = data
+          songs = data
           populateSongDropdown()
-          console.log(data)
-          loadFunction()
+          //console.log(data)
+
+          var len = songs.length
+          // for( var i = 0; i < len; i++){//Get playback settings as well
+          //   getPlaybackSettings(songs[i].id)
+          // }
+
+
+          function getAllPlaybackSettings(index){
+            if(index < len){
+              getPlaybackSettings(songs[index].id, function(){getAllPlaybackSettings(index + 1)})//second function happens after first
+            }else{
+              console.log(songs)
+              console.log(playbackSettingsList)
+              loadFunction()
+            }
+          }
+
+          getAllPlaybackSettings(0)
+
+
         },
         error: function(){
         }
@@ -94,36 +84,38 @@ $(document).ready(function(){
   }
 
   function newSong(){
-    jsRoutes.controllers.JSONmaster.newSong(userId).ajax({
-      success: function(data){
-        var newSongId = toInt(data)
-        getSongs(function(){//Reget songs and set current song to new song
-          getSong(newSongId)
-          $('#songDropdown').val(newSongId)
-        })
+    var blankSong={
+      id: -1, //doesn't really matter, not stored
+      rawText: "|C|",
+      title: "New Song", 
+      composer: "Composer",
+      dateCreated: "Date", 
+      timeSig: 4, 
+      currentKey: "C", 
+      destinationKey: "C",
+      transposeOn: false,
+      romanNumeral: false,
+      userId: -1 //doesn't matter
+    }
+    songs.push(blankSong)
+    newPlaybackSettings()
 
-        loadSong()
-      },
-      error: function(err){
-        alert("Error opening song")
-      }
-    })
+    populateSongDropdown()//refresh dropdown list
+
+    //Select dropdown of new song
+
+    songIndex = songs.length - 1
+    $("#songDropdown").val(songIndex)
+
+    loadSong()
+
   }
-
   function deleteSong(){
-    jsRoutes.controllers.JSONmaster.deleteSong(song.id).ajax({
-      success: function(data){
-
-        getSongs(function(){
-          getSong(toInt($("#songDropdown").first().val()))//get first song in dropdown
-        })
-
-        loadSong()
-      },
-      error: function(err){
-        alert("Error deleting song")
-      }
-    })
+    songs.splice(songIndex, 1)
+    playbackSettingsList.splice(songIndex, 1)
+    populateSongDropdown()//refresh dropdown list
+    songIndex = 0 //reset song to first song
+    loadSong()
   }
   function saveSong(){
     var title = $("#title").val()
@@ -136,7 +128,7 @@ $(document).ready(function(){
     var romanNumeral = $("#romanNumeral").is(':checked')
     var rawText = $("#rawText").val()
 
-    var newSong={
+    var updatedSong={
       id: song.id,
       rawText: rawText,
       title: title, 
@@ -147,50 +139,36 @@ $(document).ready(function(){
       destinationKey: destinationKey,
       transposeOn: transposeOn,
       romanNumeral: romanNumeral,
-      userId: userId};
-
-    song = newSong
-
-    var songJSON = JSON.stringify(newSong)
+      userId: -1};
 
 
-    console.log(newSong)
-    jsRoutes.controllers.JSONmaster.saveSong(songJSON).ajax(
-    {
-      success: function(data){
-        loadSong()
-        //Change text of dropdown
-        $("#songDropdown option:selected").text(title)
-      },
-      error: function(){
-      },
-      data: songJSON,
-      contentType: "application/json"
-    }
-    )
-
-    savePlaybackSettings()//when ever song saved, save playback settings
+    $("#songDropdown option:selected").text(title)
+    songs[songIndex] = updatedSong
+    savePlaybackSettings()
+    loadSong()
   }
 
-  
-
-  //SONG Rendering/Display ---------------------------------------------------------------
-
-  function loadSong(){
+  function loadSong(){//Fire when songIndex changes
+    song = songs[songIndex]
+    //console.log(songIndex)
+    console.log(song)
+    //alert(song.title)
     updateSongFieldDisplay()
     printFormattedText()
-    getPlaybackSettings(song.id, updatePlaybackSettingsFieldDisplay)
+
+    loadPlaybackSettings()
+    updatePlaybackSettingsFieldDisplay()
+
   }
 
-
-
+  //SONG Rendering/Display ---------------------------------------------------------------
   function populateSongDropdown(){
     $("#songDropdown").empty()//clear first
 
-    for (var i = 0; i < songList.length; i++){
+    for (var i = 0; i < songs.length; i++){
 
       $("#songDropdown").append(
-        $('<option>').text(songList[i].label).val(songList[i].id)
+        $('<option>').text(songs[i].title).val(i) //Store index in value
       )
     }
   }
@@ -203,8 +181,8 @@ $(document).ready(function(){
     $("#timeSig").val(song.timeSig)
     $("#currentKey").val(song.currentKey)
     $("#destinationKey").val(song.destinationKey)
-    $("#transposeOn").prop('checked', song.transposeOn);
-    $("#romanNumeral").prop('checked', song.romanNumeral);
+    $("#transposeOn").attr('checked', song.transposeOn);
+    $("#romanNumeral").attr('checked', song.romanNumeral);
     $("#rawText").val(song.rawText)
   }
 
@@ -217,7 +195,7 @@ $(document).ready(function(){
         renderedText = data
 
         var formatted = grayOutSlashes(data)
-        console.log(formatted)
+        //console.log(formatted)
       
         $("#renderedText").html(formatted)
       },
@@ -243,19 +221,33 @@ $(document).ready(function(){
 
 
   //Playback Settings CRUD ---------------------------------------------------------------
-  function getPlaybackSettings(id, loadFunction){
+  function getPlaybackSettings(id, nextCall){
     jsRoutes.controllers.JSONmaster.getPlaybackSettings(id).ajax({
       success: function(data){
-        playbackSettings = data
-        console.log(playbackSettings)
-        loadFunction()//must change display after callback
+        console.log(data)
+        playbackSettingsList.push(data)
+        nextCall()
       },
       error: function(err){
-        console.log("Error opening playbackSettings")
+        alert("Error opening playbackSettings")
       }
     })
   }
-  
+
+  //Playback Settings DISPLAY ---------------------------------------------------------------
+  function updatePlaybackSettingsFieldDisplay(){
+    $("#bpm").val(playbackSettings.bpm)
+    $("#repeats").val(playbackSettings.repeats)
+    $("#pianoMin").val(playbackSettings.pianoSettings.lower)
+    $("#pianoMax").val(playbackSettings.pianoSettings.upper)
+    $("#pianoStayInTessitura").val(playbackSettings.pianoSettings.stayInTessitura)
+    $("#pianoConnectivity").val(playbackSettings.pianoSettings.connectivity)
+    $("#bassMin").val(playbackSettings.bassSettings.lower)
+    $("#bassMax").val(playbackSettings.bassSettings.upper)
+    $("#bassStayInTessitura").val(playbackSettings.bassSettings.stayInTessitura)
+    $("#bassConnectivity").val(playbackSettings.bassSettings.connectivity)
+  }
+
   function savePlaybackSettings(){
     var songId = song.id
     var bpm = toInt($("#bpm").val())
@@ -302,38 +294,62 @@ $(document).ready(function(){
       bassSettings: bassSettings
     }
 
-    var playbackSettingsJSON = JSON.stringify(updatedPlaybackSettings)
-    jsRoutes.controllers.JSONmaster.savePlaybackSettings(playbackSettingsJSON).ajax({
-      success: function(data){
+    playbackSettingsList[songIndex] = updatedPlaybackSettings
 
-      },
-      error: function(err){
-        console.log("Error saving playbackSettings")
-      },
-      data: playbackSettingsJSON,
-      contentType: "application/json"
-    })
+    loadPlaybackSettings()
   }
 
-  //Playback Settings DISPLAY ---------------------------------------------------------------
-  function updatePlaybackSettingsFieldDisplay(){
-    $("#bpm").val(playbackSettings.bpm)
-    $("#repeats").val(playbackSettings.repeats)
-    $("#pianoMin").val(playbackSettings.pianoSettings.lower)
-    $("#pianoMax").val(playbackSettings.pianoSettings.upper)
-    $("#pianoStayInTessitura").val(playbackSettings.pianoSettings.stayInTessitura)
-    $("#pianoConnectivity").val(playbackSettings.pianoSettings.connectivity)
-    $("#bassMin").val(playbackSettings.bassSettings.lower)
-    $("#bassMax").val(playbackSettings.bassSettings.upper)
-    $("#bassStayInTessitura").val(playbackSettings.bassSettings.stayInTessitura)
-    $("#bassConnectivity").val(playbackSettings.bassSettings.connectivity)
+  function newPlaybackSettings(){
+
+    var pianoSettings = {
+      lower: 43,
+      upper: 72,
+      stayInTessitura: 5,
+      connectivity: 1
+    }
+
+    var bassSettings = {
+      lower: 31,
+      upper: 55,
+      stayInTessitura: 3,
+      connectivity: 1
+    }
+
+    var blankPlaybackSettings = {
+      songId: -1,
+      bpm: 120,
+      repeats: 1,
+      pianoSettings: pianoSettings,
+      bassSettings: bassSettings
+    }
+
+    playbackSettingsList.push(blankPlaybackSettings)
+
+
   }
+
+  function loadPlaybackSettings(){
+    playbackSettings = playbackSettingsList[songIndex]
+  }
+
+
+
+
 
 
   //MIDI------------------------------------------
   $("#generateMusic").on("click", function(){
-    var songJSON = JSON.stringify(song)
-    jsRoutes.controllers.JSONmaster.playback(songJSON).ajax(
+
+    var superSong = {
+      song: song,
+      playbackSettings: playbackSettings
+    }
+
+    // console.log(superSong)
+
+    var superSongJSON = JSON.stringify(superSong)
+    // console.log(superSongJSON)
+    jsRoutes.controllers.JSONmaster.playbackGuestAccount(superSongJSON).ajax(
     {
       success: function(data){
         //data is the path returned
@@ -346,7 +362,7 @@ $(document).ready(function(){
       },
       error: function(){
       },
-      data: songJSON,
+      data: superSongJSON,
       contentType: "application/json"
     }
     )
@@ -397,6 +413,7 @@ $(document).ready(function(){
   function toInt(stringRepresentation){
     return parseInt(stringRepresentation, 10)
   }
+
   function toFloat(stringRepresentation){
     return parseFloat(stringRepresentation, 10)
   }
@@ -408,7 +425,6 @@ $(document).ready(function(){
       return value
     }
   }
-
 
   //Buttons/Listeners -------------------------------------------------------------
 
@@ -437,6 +453,11 @@ $(document).ready(function(){
     saveSong()
   });
 
+  $("#songDropdown").change(function(){
+    songIndex = toInt($("#songDropdown option:selected").val())
+    loadSong()
+  })
+
   $("#repeats").change(function(){
     saveSong()
   })
@@ -449,139 +470,14 @@ $(document).ready(function(){
     saveSong()
   })
 
-  $("#songDropdown").change(function(){
-    getSong(toInt($("#songDropdown option:selected").val()))
-  })
-  
   $("#new").on("click", function(){
     newSong()
   })
-
+  
   $("#delete").on("click", function(){
     deleteSong()
   })
 
-
-
-
-
   
 
-  
-
-  
-
-  // function loadMidiString(path){
-
-  //   var url = jsRoutes.controllers.JSONmaster.midiAsBase64(path).url
-
-  //   $.get(url, function(data){
-  //     console.log(data)
-
-  //     //player.loadFile(data, player.start)
-  //   })
-  //   // $.ajax({
-  //   //   type:'GET',
-  //   //   url: url,
-  //   //   data: {},
-  //   //   success: function(data) {
-  //   //    console.log(data); 
-  //   //   }, error: function(err) {
-  //   //    console.log("Error"); 
-  //   //   }
-  //   // });
-  // }
-
-  // function initializeMidiJs(){
-  //   MIDI.loadPlugin({
-  //     soundfontUrl: "/assets/soundfonts/",
-  //     instruments: ["acoustic_grand_piano", "acoustic_bass", "synth_drum"],
-  //     callback: function(){
-  //       player = MIDI.Player
-  //       player.timeWarp = 1
-  //     }
-  //   })
-  // }
-
-
-
-  
-
-  
-
-  
-
-  
-
-
-  // function resize(){
-  //   var widthDisplay = $("#renderedText").width()
-  //   // var defaultFontSize = toInt($("#renderedText").css("font-size"))
-  //   var startingFont = 15
-  //   var font = startingFont
-  //   // alert(width)
-  //   // var startingWidthOfCharacters = font * charactersInLongestLine
-
-  //   var test = document.getElementById("FontTest")
-  //   document.getElementById("FontTest").innerHTML = renderedText
-
-  //   $("#FontTest").css("font-size", startingFont)
-  //   var widthOfText = $("#FontTest").width() + 1
-
-
-  //   alert(widthOfText)
-  //   if(widthOfText > widthDisplay){//too big, scale down
-  //     alert("Too big")
-  //     while(widthOfText > widthDisplay){
-  //       font--
-  //       alert(font)
-  //       $("#FontTest").css("font-size", font)
-  //       widthOfText = $("#FontTest").width() + 1
-  //       alert(widthOfText)
-  //     }
-  //   }
-
-  //   alert(font)
-  //   $("#renderedText").css("font-size", font)
-  // }
-
-  // $(window).on('resize', function(){
-  //   resize()
-  // })
-
-  // function saveSong(){
-  //   var title = $("#title").val()
-  //   var composer = $("#composer").val()
-  //   var dateCreated = $("#dateCreated").val()
-  //   var timeSig = $("#timeSig").val()
-  //   var currentKey = $("#currentKey").val()
-  //   var destinationKey = $("#destinationKey").val()
-  //   var transposeOn = $("#transposeOn").is(':checked')
-  //   var romanNumeral = $("#romanNumeral").is(':checked')
-  //   var rawText = $("#rawText").val()
-
-  //   newSong={
-  //     id: song.id,
-  //     rawText: rawText,
-  //     title: title, 
-  //     composer: composer, 
-  //     dateCreated: dateCreated, 
-  //     currentKey: currentKey, 
-  //     destinationKey: destinationKey,
-  //     transposeOn: transposeOn,
-  //     romanNumeral: romanNumeral,
-  //     userId: GUEST_USER_ID};
-  //   songJSON = JSON.stringify(newSong)
-  //   console.log(newSong)
-  //   jsRoutes.controllers.JSONmaster.saveSong(songJSON).ajax(
-  //   {
-  //     success: function(data){
-  //     },
-  //     error: function(){
-  //     },
-  //     data: songJSON,
-  //     contentType: "application/json"
-  //   }
-  //   )
-  // }	
 })

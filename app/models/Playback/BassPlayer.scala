@@ -15,10 +15,110 @@ object BassPlayer{
 
 
 
-	def bassRangeProbability = Helper.powerProbabilityCurve(DefaultCenter, DefaultDeviation, DefaultBassSettings.stayInTessitura)
-	def octaveShiftNecessary(note: Int) = Helper.rollDice(bassRangeProbability(note))
 	
-	def getBass(chordTemplate: Array[ComperTemplate]) = {
+	
+	def getBass(chordTemplate: Array[ComperTemplate], bassSettings: BassSettings) = {
+
+		val center = (bassSettings.upper + bassSettings.lower) / 2
+		val deviation = bassSettings.upper - center
+
+		def bassRangeProbability = Helper.powerProbabilityCurve(center, deviation, bassSettings.stayInTessitura)
+		def octaveShiftNecessary(note: Int) = Helper.rollDice(bassRangeProbability(note))
+
+
+
+		def nextBassRoot(previousRoot: Int, desiredRoot: Int) = {
+			val closestInterval = Note.closestInterval(previousRoot, desiredRoot)
+
+			val interval = closestInterval match {
+				case 5 => {//Perfect 4th up
+					if(Helper.rollDice(0.5)){//50% of time descend 5th instead of ascend 4th
+						-Interval.P5
+					}
+					else{
+						Interval.P4
+					}
+				}
+
+				case -5 => {//Perfect 4th down
+					if(Helper.rollDice(0.5)){//50% of time ascend 5th instead of descend 4th
+						Interval.P5
+					}
+					else{
+						-Interval.P4
+					}
+				}
+				case 6 | -6 => {//Tritone
+					if(Helper.rollDice(0.5)){//50% up, 50% down
+						Interval.A4
+					}
+					else{
+						-Interval.A4
+					}
+				}
+
+				case i => i
+			}
+
+
+			val potentialNextNote = previousRoot + interval
+
+			//If note out of range, make it in range. Based on probability
+			if(potentialNextNote > DefaultCenter){//If higher than center
+				if(octaveShiftNecessary(potentialNextNote)){
+					potentialNextNote - 12
+				}else{
+					potentialNextNote
+				}
+			}
+			else{//If lower than center
+				if(octaveShiftNecessary(potentialNextNote)){
+					potentialNextNote + 12
+				}else{
+					potentialNextNote
+				}
+			}
+		}
+
+		def bassSkeleton(chordTemplate: Array[ComperTemplate]) = {
+
+			def loop(chordQueue: Array[ComperTemplate], out: Array[SingleNote]): Array[SingleNote] = {
+
+				if(chordQueue.isEmpty){
+					out
+				}else{
+
+					val previousNote = out.last.note
+
+					val nextChordRoot = chordQueue.head.chordGenerator.rootMidi
+
+					val nextNote = nextBassRoot(previousNote, nextChordRoot)
+
+					println(nextNote)
+
+					val finalOut = SingleNote(nextNote, chordQueue.head.tick)//keep same tick
+
+					loop(chordQueue.tail, out :+ finalOut)
+
+				}
+			}
+
+			val firstChord = chordTemplate.head
+
+			def initialNote(note: Int) = {//Get first note
+				val desiredHeight = Helper.getRandomWithinRange(bassSettings.lower, bassSettings.upper)
+				val octaveAdjust = Note.octaveAdjust(note, desiredHeight)
+
+				note + octaveAdjust
+			}
+
+			val firstNote = SingleNote(initialNote(firstChord.chordGenerator.rootMidi), firstChord.tick)
+			
+			loop(chordTemplate.tail, Array[SingleNote](firstNote))
+		}
+
+		
+		
 		val skeleton = bassSkeleton(chordTemplate)
 
 		println(Note.printNotes(skeleton.map(_.note)))
@@ -39,101 +139,21 @@ object BassPlayer{
 			}
 		}
 
+
+		
+
+
 		loop(notesWithChords.head, notesWithChords.tail, Array())
 		
 	}
 	
 
-	def bassSkeleton(chordTemplate: Array[ComperTemplate]) = {
+	
 
-		def loop(chordQueue: Array[ComperTemplate], out: Array[SingleNote]): Array[SingleNote] = {
-
-			if(chordQueue.isEmpty){
-				out
-			}else{
-
-				val previousNote = out.last.note
-
-				val nextChordRoot = chordQueue.head.chordGenerator.rootMidi
-
-				val nextNote = nextBassRoot(previousNote, nextChordRoot)
-
-				println(nextNote)
-
-				val finalOut = SingleNote(nextNote, chordQueue.head.tick)//keep same tick
-
-				loop(chordQueue.tail, out :+ finalOut)
-
-			}
-		}
-
-		val firstChord = chordTemplate.head
-
-		val firstNote = SingleNote(initialNote(firstChord.chordGenerator.rootMidi), firstChord.tick)
-		
-		loop(chordTemplate.tail, Array[SingleNote](firstNote))
-	}
-
-	def initialNote(note: Int) = {//Get first note
-		val desiredHeight = Helper.getRandomWithinRange(DefaultBassSettings.lower, DefaultBassSettings.upper)
-		val octaveAdjust = Note.octaveAdjust(note, desiredHeight)
-
-		note + octaveAdjust
-	}
+	
 
 
-	def nextBassRoot(previousRoot: Int, desiredRoot: Int) = {
-		val closestInterval = Note.closestInterval(previousRoot, desiredRoot)
-
-		val interval = closestInterval match {
-			case 5 => {//Perfect 4th up
-				if(Helper.rollDice(0.5)){//50% of time descend 5th instead of ascend 4th
-					-Interval.P5
-				}
-				else{
-					Interval.P4
-				}
-			}
-
-			case -5 => {//Perfect 4th down
-				if(Helper.rollDice(0.5)){//50% of time ascend 5th instead of descend 4th
-					Interval.P5
-				}
-				else{
-					-Interval.P4
-				}
-			}
-			case 6 | -6 => {//Tritone
-				if(Helper.rollDice(0.5)){//50% up, 50% down
-					Interval.A4
-				}
-				else{
-					-Interval.A4
-				}
-			}
-
-			case i => i
-		}
-
-
-		val potentialNextNote = previousRoot + interval
-
-		//If note out of range, make it in range. Based on probability
-		if(potentialNextNote > DefaultCenter){//If higher than center
-			if(octaveShiftNecessary(potentialNextNote)){
-				potentialNextNote - 12
-			}else{
-				potentialNextNote
-			}
-		}
-		else{//If lower than center
-			if(octaveShiftNecessary(potentialNextNote)){
-				potentialNextNote + 12
-			}else{
-				potentialNextNote
-			}
-		}
-	}
+	
 
 	def chromaticDiatonicApproach(destination: SingleNote) = {
 		if(Helper.rollDice(0.95)){//Chromatic

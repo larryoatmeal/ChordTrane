@@ -6,6 +6,7 @@ import java.io.IOException
 import javax.sound.midi.Sequence
 import javax.sound.midi.MidiEvent
 import javax.sound.midi.MidiMessage
+import javax.sound.midi.MetaMessage
 import javax.sound.midi.MidiSystem
 import javax.sound.midi.ShortMessage
 import javax.sound.midi.Track
@@ -95,6 +96,28 @@ object MidiCreator{
 			}
 		}.flatten
 	}
+
+	def dummy(bpm: Int) = {
+		val microsecondsPerQuarterNote = 60000000 / bpm
+
+		val b3 = microsecondsPerQuarterNote & 0xFF
+		val b2 = (microsecondsPerQuarterNote >> 8) & 0xFF
+		val b1 = (microsecondsPerQuarterNote >> 16) & 0xFF
+
+		Array(b1, b2, b3)
+	}
+
+	def tempoMessage(bpm: Int) = {
+		val microsecondsPerQuarterNote = 60000000 / bpm
+
+		val b3 = microsecondsPerQuarterNote & 0xFF
+		val b2 = (microsecondsPerQuarterNote >> 8) & 0xFF
+		val b1 = (microsecondsPerQuarterNote >> 16) & 0xFF
+
+		new MetaMessage(0x51, Array(b1.toByte, b2.toByte, b3.toByte), 3)
+	}
+
+	def tempoEvent(bpm: Int) =  new MidiEvent(tempoMessage(bpm), 0)
 
 	// def test = {
 	// 	val midiEvents = midiChordsToMidiEvent(PianoComper.testChords, 2)

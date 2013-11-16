@@ -13,7 +13,8 @@ object Master{
 		false,
 		false
 	)
-	
+
+
 
 	def parseSong(song: Song) = {
 		val allLines = Parser.parse(song.rawMusic, song.timeSig)
@@ -70,12 +71,14 @@ object Master{
 	}
 
 	
-
-	def playback(song: Song, path: String) = {
+	def playback(song: Song, path: String, pianoSettings: PianoSettings, bassSettings: BassSettings, bpm: Int, repeats: Int) = {
 		val allLines = parseSong(song)
 		val measures = Helper.measuresOnly(allLines)
 
-		val rhythmSection = new RhythmSectionCoordinator(measures, song.timeSig, 2, PianoPlayer.JAZZ_SWING4)
+
+
+
+		val rhythmSection = new RhythmSectionCoordinator(measures, song.timeSig, 2, PianoPlayer.JAZZ_SWING4, pianoSettings, bassSettings, bpm, repeats)
 		rhythmSection.midi(path)
 	}
 
