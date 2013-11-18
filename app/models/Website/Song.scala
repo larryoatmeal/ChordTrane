@@ -94,7 +94,7 @@ object Song extends DatabaseObject{
 
   def playbackGuestAccount(superSong: SuperSong) = {
     val path = s"public/MusicXML/${superSong.song.title}.mid"
-    val playbackSettings = PlaybackSettings.getPlaybackSettings(superSong.song.id)
+    //val playbackSettings = superSong.playbackSettings
 
 
     models.Master.playback(songConversion(superSong.song), path, 
