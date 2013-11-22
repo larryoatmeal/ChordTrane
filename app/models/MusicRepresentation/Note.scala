@@ -27,7 +27,7 @@ object Note{
 
   //Convert letter into number
   def midify(notename: String) = {
-    notename match {
+    notename.toUpperCase match {
       case "C" | "Dbb" | "B#"  => 0 
       case "C#"| "Db"  | "B##" => 1
       case "D" | "Ebb" | "C##" => 2
