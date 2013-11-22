@@ -361,11 +361,12 @@ $(document).ready(function(){
   function openMusicPlayer(path){
     $("#midiplayer").hide()
     $("#downloadMIDI").hide()
+
+    $("#downloadMIDI").show()
     $("#midiplayer").attr("data", path)
 
     //wait a second to prevent clipping
     $("#midiplayer").show()
-    $("#downloadMIDI").show()
   }
 
   //MusicXML -----------------------------------------------------------
