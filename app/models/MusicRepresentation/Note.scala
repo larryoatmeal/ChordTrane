@@ -25,9 +25,15 @@ object Note{
     11 -> "B"
   )
 
+  def upperCase(note: String) = {
+    val letter = note.head.toString.toUpperCase
+    letter + note.tail
+  }
+
+
   //Convert letter into number
   def midify(notename: String) = {
-    notename.toUpperCase match {
+    upperCase(notename) match {
       case "C" | "Dbb" | "B#"  => 0 
       case "C#"| "Db"  | "B##" => 1
       case "D" | "Ebb" | "C##" => 2
