@@ -139,7 +139,7 @@ class MidiCreator{
 	}
 
 	def createMidi(filePath: String){
-		println(sequence.getPatchList())
+		//println(sequence.getPatchList())
 		val outputFile = new File(filePath)
 		MidiSystem.write(sequence, 1, outputFile)
 	}

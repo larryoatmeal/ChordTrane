@@ -94,7 +94,7 @@ object BassPlayer{
 
 					val nextNote = nextBassRoot(previousNote, nextChordRoot)
 
-					println(nextNote)
+					//println(nextNote)
 
 					val finalOut = SingleNote(nextNote, chordQueue.head.tick)//keep same tick
 
@@ -121,7 +121,7 @@ object BassPlayer{
 		
 		val skeleton = bassSkeleton(chordTemplate)
 
-		println(Note.printNotes(skeleton.map(_.note)))
+		//println(Note.printNotes(skeleton.map(_.note)))
 		
 		val notesWithChords = skeleton zip chordTemplate.map(_.chordGenerator)
 		

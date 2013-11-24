@@ -125,10 +125,10 @@ object PianoPlayer{
 					val lowestNoteOfChord = chord.head
 					val shiftProbability = shiftRangeProbability(lowestNoteOfChord)
 
-					println(PianoSettings.lower + "$" + PianoSettings.upper)
+					//println(PianoSettings.lower + "$" + PianoSettings.upper)
 
 
-					println(s"$lowestNoteOfChord: Probability -> $shiftProbability")
+					//println(s"$lowestNoteOfChord: Probability -> $shiftProbability")
 					Helper.rollDice(shiftProbability)
 				}
 

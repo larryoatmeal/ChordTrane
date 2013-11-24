@@ -24,6 +24,10 @@ object Application extends Controller with Secured{
   }
 
   def homeGuest = Action {
+    implicit request =>
+    val ip = request.remoteAddress
+    Logger.info("IP: " + ip + " " + new java.util.Date())
+
     Ok(views.html.homeGuest("Home"))
   }
   
