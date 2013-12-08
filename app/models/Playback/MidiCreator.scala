@@ -113,8 +113,9 @@ object MidiCreator{
 		val b3 = microsecondsPerQuarterNote & 0xFF
 		val b2 = (microsecondsPerQuarterNote >> 8) & 0xFF
 		val b1 = (microsecondsPerQuarterNote >> 16) & 0xFF
-
-		new MetaMessage(0x51, Array(b1.toByte, b2.toByte, b3.toByte), 3)
+		val msg = new MetaMessage
+		msg.setMessage(0x51, Array(b1.toByte, b2.toByte, b3.toByte), 3)
+		msg
 	}
 
 	def tempoEvent(bpm: Int) =  new MidiEvent(tempoMessage(bpm), 0)
