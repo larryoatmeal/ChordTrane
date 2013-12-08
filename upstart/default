@@ -14,14 +14,14 @@ CHORDTRANE_GROUP="root"
 # mkdir -p /opt/chordtrane/releases
 ## all subsequent updates
 # cd /opt/chordtrane/releases
-# git clone git@github.com:larryoatmeal/ChordTrane.git `date +'%Y%m%d%H%M%S'`
+# git clone https://github.com/larryoatmeal/ChordTrane.git `date +'%Y%m%d%H%M%S'`
 # cd {YYYYmmddHHMMSS}
 # play compile start-script
-# chown -R chordtrane:chordtrane /opt/chordtrane/releases/{YYYYmmddHHMMSS}
-# stop chordtrane
+# sudo stop chordtrane
 # rm -f /opt/chordtrane/current
 # ln -s /opt/chordtrane/releases/{YYYYmmddHHMMSS} /opt/chordtrane/current
-CHORDTRANE_HOME="/opt/chordtrane"
+# sudo start chordtrane
+CHORDTRANE_HOME="/opt/chordtrane/current"
 
 export JAVA_OPTS="-server"
-export _JAVA_OPTIONS="-Xmx384m"
+export _JAVA_OPTIONS="-Dhttp.port=80"
