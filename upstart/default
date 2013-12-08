@@ -1,0 +1,27 @@
+# /etc/default/chordtrane
+
+# Should start?
+ENABLE_CHORDTRANE_WEB="yes"
+
+# User Settings, if you have not created a linux user to run the app as, create a user
+# useradd -m -d /opt/chordtrane -U -s /bin/bash
+CHORDTRANE_USER="root"
+CHORDTRANE_GROUP="root"
+
+# chordtrane can be manually cloned, compiled and symlinked
+# a deployment looks like this (similar to Capistrano):
+## first time
+# mkdir -p /opt/chordtrane/releases
+## all subsequent updates
+# cd /opt/chordtrane/releases
+# git clone git@github.com:larryoatmeal/ChordTrane.git `date +'%Y%m%d%H%M%S'`
+# cd {YYYYmmddHHMMSS}
+# play compile start-script
+# chown -R chordtrane:chordtrane /opt/chordtrane/releases/{YYYYmmddHHMMSS}
+# stop chordtrane
+# rm -f /opt/chordtrane/current
+# ln -s /opt/chordtrane/releases/{YYYYmmddHHMMSS} /opt/chordtrane/current
+CHORDTRANE_HOME="/opt/chordtrane"
+
+export JAVA_OPTS="-server"
+export _JAVA_OPTIONS="-Xmx384m"
