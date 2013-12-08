@@ -5,8 +5,8 @@ ENABLE_CHORDTRANE_WEB="yes"
 
 # User Settings, if you have not created a linux user to run the app as, create a user
 # useradd -m -d /opt/chordtrane -U -s /bin/bash
-CHORDTRANE_USER="chordtrane"
-CHORDTRANE_GROUP="chordtrane"
+CHORDTRANE_USER="root"
+CHORDTRANE_GROUP="root"
 
 # chordtrane can be manually cloned, compiled and symlinked
 # a deployment looks like this (similar to Capistrano):

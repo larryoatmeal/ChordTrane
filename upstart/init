@@ -2,7 +2,7 @@
 
 limit nofile 32768 32768
 
-description "chordtrane-web"
+description "chordtrane"
 
 start on (local-filesystems and net-device-up IFACE=eth0)
 stop on [!12345]
