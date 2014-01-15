@@ -42,6 +42,12 @@ GET 	/js/midiString64 			controllers.JSONmaster.midiString64(path: String)
 GET 	/js/download				controllers.JSONmaster.download(path: String)
 
 
+#------------MINECRAFT
+
+GET 	/minecraft 					controllers.minecraft.Application.home
+
+
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/javascripts/routes  controllers.Application.javascriptRoutes
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

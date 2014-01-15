@@ -17,7 +17,7 @@ object ApplicationBuild extends Build {
     "commons-io" % "commons-io" % "2.4"
     )
 
-  val appSettings = Defaults.defaultSettings ++ startScriptForClassesSettings
+  val appSettings = playScalaSettings ++ startScriptForClassesSettings
 
   val main = play.Project(appName, appVersion, appDependencies, settings = appSettings).settings(
     // Add your own project settings here 

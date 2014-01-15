@@ -55,13 +55,5 @@ object Application extends Controller with Secured{
     ).as("text/javascript") 
   }
 
-
-
-  
-
-
-
-
-
   
 }
