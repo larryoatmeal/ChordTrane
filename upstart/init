@@ -16,7 +16,7 @@ script
     export HOME=$CHORDTRANE_HOME
     export JAVA_TOOL_OPTIONS='-Dfile.encoding=UTF8'
     export JAVA_OPTS=$JAVA_OPTS
-    exec start-stop-daemon --start --pidfile /var/run/chordtrane.pid --make-pidfile --chuid ${CHORDTRANE_USER}:${CHORDTRANE_GROUP} --chdir ${CHORDTRANE_HOME} --exec ${CHORDTRANE_HOME}/target/start
+    exec start-stop-daemon --start --pidfile /var/run/chordtrane.pid --make-pidfile --chuid ${CHORDTRANE_USER}:${CHORDTRANE_GROUP} --chdir ${CHORDTRANE_HOME} --exec ${CHORDTRANE_HOME}/target/start -- play.core.server.NettyServer
   fi
 end script
 
