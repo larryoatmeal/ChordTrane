@@ -16,7 +16,8 @@ CHORDTRANE_GROUP="root"
 # cd /opt/chordtrane/releases
 # git clone https://github.com/larryoatmeal/ChordTrane.git `date +'%Y%m%d%H%M%S'`
 # cd {YYYYmmddHHMMSS}
-# play compile start-script
+# //USE STEP BELOW INSTEAD play compile start-script
+# play clean compile stage
 # sudo stop chordtrane
 # rm -f /opt/chordtrane/current
 # ln -s /opt/chordtrane/releases/{YYYYmmddHHMMSS} /opt/chordtrane/current
