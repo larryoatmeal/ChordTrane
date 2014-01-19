@@ -1,7 +1,7 @@
 import sbt._
 import Keys._
 import play.Project._
-import com.typesafe.sbt.SbtStartScript._
+//import com.typesafe.sbt.SbtStartScript._
 
 object ApplicationBuild extends Build {
   val appName         = "ChordTrane"
@@ -17,7 +17,8 @@ object ApplicationBuild extends Build {
     "commons-io" % "commons-io" % "2.4"
     )
 
-  val appSettings = playScalaSettings ++ startScriptForClassesSettings
+  //val appSettings = playScalaSettings ++ startScriptForClassesSettings
+  val appSettings = playScalaSettings
 
   val main = play.Project(appName, appVersion, appDependencies, settings = appSettings).settings(
     // Add your own project settings here 
