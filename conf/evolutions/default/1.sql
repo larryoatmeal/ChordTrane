@@ -1,8 +1,4 @@
 # --- !Ups
-
-
-
-
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
@@ -60,6 +56,40 @@ CREATE TABLE playbackSettings (
 );
 
 INSERT INTO playbackSettings VALUES (1, 120, 4, 48, 72, 1.0, 5.0, 24, 55, 1.0, 5.0);
+
+
+
+DROP TABLE IF EXISTS minecraftUser;
+
+
+CREATE TABLE minecraftUser (
+	username			varchar(255) 	NOT NULL,
+	password 			varchar(255) 	NOT NULL,
+	id					int 			NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY(id)
+);
+
+DROP TABLE IF EXISTS minecraftOffer;
+
+
+CREATE TABLE minecraftOffer (
+	businessmanid 		int 			NOT NULL,
+	offertype			varchar(255)	NOT NULL,
+	title				varchar(255)	NOT NULL,
+	offering   			text 			NOT NULL,
+	inExchangeFor		text			NOT NULL,
+	description			text,
+	active 				boolean			NOT NULL,
+	completed			boolean 		NOT NULL,
+	clientid			int,
+	postDate			datetime 		NOT NULL,
+	completeDate		datetime,
+	id 					int 			NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY(id)
+);
+
+
+
 
 -- 
 # --- !Downs
