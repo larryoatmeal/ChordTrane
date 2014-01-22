@@ -18,9 +18,9 @@ object ApplicationBuild extends Build {
     )
 
   //val appSettings = playScalaSettings ++ startScriptForClassesSettings
-  val appSettings = playScalaSettings
+  // val appSettings = playScalaSettings
 
-  val main = play.Project(appName, appVersion, appDependencies, settings = appSettings).settings(
+  val main = play.Project(appName, appVersion, appDependencies).settings(
     // Add your own project settings here 
     //import models._ 
     initialCommands := """

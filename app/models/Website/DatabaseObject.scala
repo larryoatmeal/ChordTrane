@@ -9,42 +9,61 @@ trait DatabaseObject{
 	import play.api.Logger
 
 
-  val TableName = "ChordTrane"
 
-	def getSingleWithID[T](parser: RowParser[T], id: Int, idColName: String, table: String = TableName) = DB.withConnection{
+	def getSingleWithID[T](parser: RowParser[T], id: Int, idColName: String, table: String) = DB.withConnection{
     implicit connection =>
     
     val sql = SQL(s"""SELECT * FROM $table WHERE $idColName = $id""")
     sql.as(parser *).head
   }
 
-  def getAll[T](parser: RowParser[T], table: String = TableName) = DB.withConnection{
+  def getSingleWithIDOption[T](parser: RowParser[T], id: Int, idColName: String, table: String) = DB.withConnection{
+    implicit connection =>
+    
+    val sql = SQL(s"""SELECT * FROM $table WHERE $idColName = $id""")
+    val result = sql.as(parser *)
+    result match {
+      case r if r.isEmpty => None
+      case r => Some(r.head)
+    }
+  }
+
+  def getAll[T](parser: RowParser[T], table: String) = DB.withConnection{
     implicit connection =>
 
     try {
       SQL(s"""SELECT * FROM $table""").as(parser *)
     }
     catch {
-      case e => {
+      case e: Throwable => {
         Logger.error(e.toString)
         List()
       }
     }
   }
 
-  def getAllOfID[T](parser: RowParser[T], id: Int, idColName: String, table: String = TableName) = DB.withConnection{
+  def getAllOfID[T](parser: RowParser[T], id: Int, idColName: String, table: String) = DB.withConnection{
     implicit connection =>
 
     try {
       SQL(s"""SELECT * FROM $table WHERE $idColName = $id""").as(parser *)
     }
     catch {
-      case e => {
+      case e: Throwable => {
         Logger.error(e.toString)
         List()
       }
     }
   }
+
+  def deleteSingle(id: Int, idColName: String, table: String) = DB.withConnection{
+    implicit connection =>
+    SQL(s"""
+      DELETE FROM $table WHERE $idColName = $id
+      """).executeUpdate() == 1
+  }
+
+
 
 
 

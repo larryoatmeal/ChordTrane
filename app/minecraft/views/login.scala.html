@@ -1,0 +1,31 @@
+@(userForm: Form[models.minecraft.User])
+
+
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(bootstrapForm.render)}
+
+
+@template("Login"){
+	
+	<div class="container">
+
+		@userForm.globalError.map { error =>
+	  		<div class="alert alert-danger"><h1>YOU SHALL NOT PASS</h1></div>
+		}
+
+		<h1>Login</h1>
+		@form(action = controllers.minecraft.routes.Authentication.submitLogin, 'role-> "form"){
+			@inputText(userForm("username"), '_label -> "Username", 'class->"form-control")
+			@inputText(userForm("password"), '_label -> "Password", 'class->"form-control", 'type -> "password")
+			<button type="submit" class="btn btn-success">Submit</button>
+			<a class ="btn btn-warning" href="@routes.Application.home">Quit</a>
+		}
+
+		
+		
+
+    </div>
+
+    <!-- <img src="/assets/images/minecraft/minecraft_home_night.png" class="img-responsive"> -->
+
+}

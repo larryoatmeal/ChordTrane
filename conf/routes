@@ -45,6 +45,8 @@ GET 	/js/download				controllers.JSONmaster.download(path: String)
 #------------MINECRAFT
 
 GET 	/minecraft 					controllers.minecraft.Application.home
+GET 	/minecraft/login 			controllers.minecraft.Authentication.loginPage
+POST 	/minecraft/login 			controllers.minecraft.Authentication.submitLogin
 
 
 
