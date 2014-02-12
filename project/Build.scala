@@ -14,7 +14,8 @@ object ApplicationBuild extends Build {
     "org.scalaz" % "scalaz-core_2.10" % "7.0.3",
     "mysql" % "mysql-connector-java" % "5.1.18",
     "commons-codec" % "commons-codec" % "1.4",
-    "commons-io" % "commons-io" % "2.4"
+    "commons-io" % "commons-io" % "2.4",
+    "joda-time" % "joda-time" % "2.3"
     )
 
   //val appSettings = playScalaSettings ++ startScriptForClassesSettings

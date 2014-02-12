@@ -45,10 +45,12 @@ object User extends models.website.DatabaseObject{
 			SET
 			username = {username},
 			password = {password}
+			WHERE id = {id}
 			"""
 		).on(
 			"username" -> user.username,
-			"password" -> user.password
+			"password" -> user.password,
+			"id" -> user.id
 		).executeUpdate() == 1
 	}
 
