@@ -22,6 +22,13 @@ CHORDTRANE_GROUP="root"
 # rm -f /opt/chordtrane/current
 # ln -s /opt/chordtrane/releases/{YYYYmmddHHMMSS} /opt/chordtrane/current
 # sudo start chordtrane
+
+#chordtrane -mem 512
+#This works, have, to find way to implement into Unix
+
+
+
+
 CHORDTRANE_HOME="/opt/chordtrane/current"
 
 export JAVA_OPTS="-server"
