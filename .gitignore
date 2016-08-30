@@ -5,7 +5,11 @@ public/MidiOutput/*.mid
 public/MidiOutput/*.xml
 public/MusicXML/*.xml
 public/MusicXML/*.mid
-target
+target/resolution-cache
+target/scala-2.10
+target/streams
+target/universal/
+!*.zip
 tmp
 .history
 dist
