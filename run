@@ -1,0 +1,40 @@
+#!/bin/sh
+APPNAME="helloworld"
+SCRIPT=$(readlink -f "$0")
+SCRIPTPATH=$(dirname "$SCRIPT")
+echo "Starting Chordtrane"
+DESTINATIONPATH="$SCRIPTPATH/builds"
+PIDPATH="$DESTINATIONPATH/pidNumber"
+echo "Stopping running instances if necessary"
+if [ -f $PIDPATH ];
+then
+	echo "Stopping instance"
+	PIDTOSTOP=$(cat $PIDPATH)
+	echo $PIDTOSTOP
+	kill $PIDTOSTOP	
+fi
+
+
+BUILDRELPATH="/target/universal"
+BUILDPATH=$SCRIPTPATH$BUILDRELPATH
+echo $BUILDPATH
+
+#Find most recent build zip file
+ZIPFILE=$(ls "$BUILDPATH" | sort -r | grep .zip| head -1)
+echo $ZIPFILE
+
+ZIPFILEPATH="$BUILDPATH/$ZIPFILE"
+unzip -o  $ZIPFILEPATH -d $DESTINATIONPATH
+
+ZIPFILENAME=${ZIPFILE%.zip}
+echo $ZIPFILENAME
+EXECPATH="$DESTINATIONPATH/$ZIPFILENAME/bin/$APPNAME"
+echo $EXECPATH
+$EXECPATH -DapplyEvolutions.default=true -DapplyDownEvolutions.default=true & 
+sleep 5
+#touch "$DESTINATIONPATH/pidNumber"
+PID=$(cat "$DESTINATIONPATH/$ZIPFILENAME/RUNNING_PID")
+echo "PID number $PID"
+echo $PID > "$PIDPATH"
+
+
