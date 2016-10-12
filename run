@@ -1,4 +1,8 @@
 #!/bin/sh
+
+#java options, necessary or too much memory
+export _JAVA_OPTIONS="-Xms64m -Xmx512m -Xss2m -XX:MaxPermSize=256m"
+
 APPNAME="helloworld"
 SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
@@ -36,5 +40,10 @@ sleep 5
 PID=$(cat "$DESTINATIONPATH/$ZIPFILENAME/RUNNING_PID")
 echo "PID number $PID"
 echo $PID > "$PIDPATH"
+
+#For redirecitng 80 to 9000
+#/sbin/iptables -t nat -F 
+#/sbin/iptables -t nat -A OUTPUT -d localhost -p tcp --dport 80 -j REDIRECT --to-ports 9000 
+#/sbin/iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 9000 
 
 
